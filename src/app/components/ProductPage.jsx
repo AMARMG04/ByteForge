@@ -51,7 +51,7 @@ const ProductPage = () => {
 
           <hr />
 
-          <div>
+          <div className="flex flex-col gap-1">
             <h1 className="font-medium text-sm lg:text-lg">SAMSUNG</h1>
             <h1 className="font-medium text-xl max-w-full md:max-w-full lg:text-3xl lg:max-w-full">
               Galaxy Book3 Pro, 16” 32GB RAM 1TB SSD, 13th Gen Intel core i7 -
@@ -74,6 +74,7 @@ const ProductPage = () => {
               <p className="line-through lg:text-xl">MRP:$2,50,000/-</p>
             </div>
 
+            <div className="flex flex-col gap-5">
             <button className=" flex flex-row justify-center items-center h-12 w-full lg:h-16 bg-violet-300 rounded-md">
               <Image
                 src="/assets/black-buy.png"
@@ -94,11 +95,12 @@ const ProductPage = () => {
               />
               <p className="font-medium text-white">Add to cart</p>
             </button>
+            </div>
           </div>
         </div>
         <hr />
 
-        <div>
+        <div className="m-4">
           <h1 className="text-3xl font-medium">Features</h1>
           <ol className=" list-disc p-4">
             <li className="">
@@ -124,10 +126,10 @@ const ProductPage = () => {
 
         <hr />
 
-        <div>
+        <div className="m-4">
           <h1 className="text-3xl font-medium">Specifications</h1>
-          <div className="overflow-x-auto">
-            <table className="min-w-full mt-6 bg-black text-white rounded-2xl">
+          <div className="overflow-x-auto py-2">
+            <table className="w-full bg-black text-white rounded-2xl">
               {/* <thead>
                   <tr>
                     <th className="py-2 px-4">Specification</th>

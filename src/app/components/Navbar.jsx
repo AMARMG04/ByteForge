@@ -3,8 +3,38 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { app } from "../firebase/config";
 
 const Navbar = () => {
+  const auth = getAuth(app);
+  const router = useRouter();
+
+  const [showMenu, setShowMenu] = useState(false);
+
+  const handleProfileClick = () => {
+    setShowMenu(!showMenu);
+  };
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setLoggedIn(true);
+    }
+  });
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      console.log("User signed out");
+      setLoggedIn(false);
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const menuLinks = [
     { text: "Monitors", url: "/monitors" },
     { text: "Processors", url: "/" },
@@ -65,30 +95,26 @@ const Navbar = () => {
             />
           )}
           <div className="flex flex-row gap-20">
-
-          <Link href="/">
-            <Image
-              src="/assets/logo.svg"
-              width={150}
-              height={150}
-              alt="Logo"
-              className="ml-2"
+            <Link href="/">
+              <Image
+                src="/assets/logo.svg"
+                width={150}
+                height={150}
+                alt="Logo"
+                className="ml-2"
               />
-          </Link>
+            </Link>
 
-          <div className="hidden lg:flex">
-            <ul className="flex flex-row gap-10 ">
+            <div className="hidden lg:flex">
+              <ul className="flex flex-row gap-10 ">
                 {menuLinks.map((link, index) => (
-                  <li
-                  key={index}
-                  className="text-white hover:text-gray-500"
-                  >
+                  <li key={index} className="text-white hover:text-gray-500">
                     <Link href={link.url}>{link.text}</Link>
                   </li>
                 ))}
               </ul>
+            </div>
           </div>
-        </div>
 
           <div
             className={
@@ -109,24 +135,126 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="flex flex-row">
-            <Link href='/cart'>
-            <Image
-              src="/assets/cart.png"
-              width={30}
-              height={30}
-              alt="cart"
-              className=" w-[24px] h-[24px]"
-            />
+            <Link href="/cart">
+              <Image
+                src="/assets/cart.png"
+                width={30}
+                height={30}
+                alt="cart"
+                className=" w-[24px] h-[24px]"
+              />
             </Link>
-            <Link href='/auth'>
-            <Image
-              src="/assets/profile.png"
-              width={30}
-              height={30}
-              alt="profile"
-              className="ml-2 w-[24px] h-[24px]"
-            />
-            </Link>
+            
+            {
+              loggedIn ? (
+                <div>
+                  <Image
+                    src="/assets/profile.png"
+                    width={30}
+                    height={30}
+                    alt="profile"
+                    className="ml-2 w-[24px] h-[24px]"
+                    onClick={handleProfileClick}
+                  />
+                  {showMenu ? (
+                    <div className="absolute top-[100px] right-0 bg-white w-[200px] h-[150px] shadow-md rounded-sm flex flex-col justify-center items-center gap-2">
+                      <div className="flex flex-row gap-2">
+                        <Image
+                          src="/assets/personal.png"
+                          width={30}
+                          height={30}
+                          alt="profile"
+                          className="ml-2 w-[24px] h-[24px]"
+                          onClick={handleProfileClick}
+                        />
+                        <Link href='/profile' className="text-lg">
+                          <p>Profile</p>
+                        </Link>
+                      </div>
+                      <div className="w-full h-[1px] bg-black"></div>
+                      <div className="flex flex-row gap-2">
+                        <Image
+                          src="/assets/orders.png"
+                          width={30}
+                          height={30}
+                          alt="profile"
+                          className="ml-2 w-[24px] h-[24px]"
+                          onClick={handleProfileClick}
+                        />
+                        <Link href='/orders' className="text-lg">
+                          <p>Orders</p>
+                        </Link>
+                      </div>
+                      <div className="w-full h-[1px] bg-black"></div>
+                      <div className="flex flex-row gap-2 justify-around items-center">
+                      <Image
+                          src="/assets/logout.png"
+                          width={30}
+                          height={30}
+                          alt="profile"
+                          className="w-[20px] h-[20px]"
+                          onClick={handleProfileClick}
+                        />
+                        <button
+                          onClick={handleLogout}
+                          className="text-lg"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                </div>
+              ) : (
+                <Link href='/auth'>
+                  <Image
+                    src="/assets/profile.png"
+                    width={30}
+                    height={30}
+                    alt="profile"
+                    className="ml-2 w-[24px] h-[24px]"
+                    onClick={handleProfileClick}
+                  />
+                </Link>
+              )
+            }
+
+            {/* {loggedIn ? (
+              // Display profile and logout options when logged in
+              <div className="flex flex-row items-center ml-4">
+                <Link href="/profile">
+                  <Image
+                    src="/assets/profile.png"
+                    width={30}
+                    height={30}
+                    alt="profile"
+                    className="w-[24px] h-[24px]"
+                  />
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="ml-2 text-white"
+                >
+                  Logout
+                </button>
+              </div>
+            ) : (
+              // Display login option when not logged in
+              <Link href="/auth">
+                <Image
+                  src="/assets/profile.png"
+                  width={30}
+                  height={30}
+                  alt="profile"
+                  className="ml-2 w-[24px] h-[24px]"
+                />
+              </Link>
+            )}
+             */}
+
+            
           </div>
         </div>
         <div className="relative flex items-center mx-2 lg:hidden">
@@ -149,9 +277,7 @@ const Navbar = () => {
             <div
               className="z-10 fixed top-[120px] left-0 right-0 bottom-0 bg-white"
               onClick={handleInputBlur}
-            >
-
-            </div>
+            ></div>
           )}
         </div>
       </div>
