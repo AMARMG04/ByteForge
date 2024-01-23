@@ -1,63 +1,16 @@
 "use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const ProductsDisplay = () => {
-  const slides = [
-    "/assets/Laptop.jpg",
-    "/assets/CPU.jpg",
-    "/assets/CPU2.jpg",
-    "/assets/Processor.jpg",
-  ];
-
-  const filterData = [
-    {
-      category: "Brand",
-      options: ["Samsung", "Apple", "Dell", "HP", "Lenovo"],
-    },
-    {
-      category: "Display Type",
-      options: ["LED", "LCD", "OLED", "IPS", "TN"],
-    },
-    {
-      category: "Resolution",
-      options: ["1080p", "1440p", "4k"],
-    },
-  ];
-
+const ProductsDisplay = ({monitors, filters}) => {
+  const filteredData = filters.options;
   const [showFilters, setShowFilters] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({});
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
-  };
-
-  const handleCheckboxChange = (category, option) => {
-    setSelectedFilters((prevFilters) => {
-      const updatedFilters = { ...prevFilters };
-      if (!updatedFilters[category]) {
-        updatedFilters[category] = [];
-      }
-
-      const index = updatedFilters[category].indexOf(option);
-
-      if (index === -1) {
-        // Option not selected, add it
-        updatedFilters[category] = [...updatedFilters[category], option];
-      } else {
-        // Option already selected, remove it
-        updatedFilters[category] = updatedFilters[category].filter(
-          (item) => item !== option
-        );
-      }
-
-      return updatedFilters;
-    });
-  };
-
+  }
   return (
     <>
       <div className="mx-2 flex flex-col gap-6 mt-10">
@@ -95,24 +48,16 @@ const ProductsDisplay = () => {
             </div>
             <hr className="my-4" />
             <div className="mx-6">
-              {filterData.map((category, index) => (
+              {Object.entries(filteredData).map(([category,options],  index) => (
                 <div key={index} className="mb-6">
                   <h4 className="font-medium text-xl mb-2">
-                    {category.category}
+                    {category}
                   </h4>
                   <div className="flex flex-col gap-2">
-                    {category.options.map((option, optionIndex) => (
+                    {options.map((option, optionIndex) => (
                       <div key={optionIndex} className="flex items-center">
                         <input
                           type="checkbox"
-                          id={`checkbox-${index}-${optionIndex}`}
-                          checked={
-                            selectedFilters[category.category] &&
-                            selectedFilters[category.category].includes(option)
-                          }
-                          onChange={() =>
-                            handleCheckboxChange(category.category, option)
-                          }
                           className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
                         />
                         <label htmlFor={`checkbox-${index}-${optionIndex}`}>
@@ -130,24 +75,16 @@ const ProductsDisplay = () => {
           <div className="hidden lg:flex border-2 rounded-md border-black w-72 h-fit">
             <div className="mx-6">
               <h1 className="text-2xl my-4 font-semibold">Filters</h1>
-              {filterData.map((category, index) => (
+              {Object.entries(filteredData).map(([category, options], index) => (
                 <div key={index} className="mb-6">
                   <h4 className="font-medium text-xl mb-2">
-                    {category.category}
+                    {category}
                   </h4>
                   <div className="flex flex-col gap-2">
-                    {category.options.map((option, optionIndex) => (
+                    {options.map((option, optionIndex) => (
                       <div key={optionIndex} className="flex items-center">
                         <input
                           type="checkbox"
-                          id={`checkbox-${index}-${optionIndex}`}
-                          checked={
-                            selectedFilters[category.category] &&
-                            selectedFilters[category.category].includes(option)
-                          }
-                          onChange={() =>
-                            handleCheckboxChange(category.category, option)
-                          }
                           className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
                         />
                         <label htmlFor={`checkbox-${index}-${optionIndex}`}>
@@ -161,33 +98,39 @@ const ProductsDisplay = () => {
             </div>
           </div>
           <div className="flex flex-col gap-10  my-10 lg:w-full">
-            <h1 className="text-2xl font-semibold">Products(10)</h1>
-            {slides.map((slide, index) => (
+            <h1 className="text-2xl font-semibold">Products({monitors.length})</h1>
+            {monitors.map((monitor, index) => (
               <div
                 key={index}
                 className="flex flex-row gap-4 shadow-2xl rounded-[10px] lg:gap-10 max-h-[400px]"
               >
+
+                <div className="relative w-1/2 lg:w-2/5">
                 <Image
-                  src={slide}
-                  width={100}
-                  height={100}
-                  className="w-[155px] rounded-l-[10px] object-cover md:w-2/5 lg:w-2/6"
+                  src={monitor.images[0]}
+                  // width={100}
+                  // height={100}
+                  fill
+                  className="w-[155px] rounded-l-[10px] border-r-2 border-gray-300 object-scale-down md:w-2/5 lg:w-[400px]"
                 />
-                <div className="flex flex-col gap-4 my-4">
+                </div>
+
+                <div className="flex flex-col gap-4 my-4 lg:w-4/6">
                   <div className="">
-                    <h1 className="font-medium text-sm lg:text-lg ">SAMSUNG</h1>
-                    <Link href="/product">
-                      <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-3xl lg:max-w-full">
-                        Galaxy Book3 Pro, 16” 32GB RAM 1TB SSD
+                    <h1 className="font-medium text-sm lg:text-lg ">{monitor.brand}</h1>
+                    <Link href={`/products/monitors/${monitor.name}`}>
+                      <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-2xl lg:max-w-full">
+                          {monitor.name}
                       </h1>
                     </Link>
                   </div>
                   <div>
-                    <p className="text-red-400 lg:text-2xl">-15%</p>
-                    <p className="text-3xl lg:text-4xl">$2,25,000/-</p>
-                    <p className="line-through lg:text-xl">MRP:$2,50,000/-</p>
+                    <p className="text-red-400 lg:text-2xl">-{monitor.discount_percentage}%</p>
+                    <p className="text-3xl lg:text-4xl">₹{monitor.mrp}/-</p>
+                    <p className="line-through lg:text-xl">MRP:₹{monitor.mrp}/-</p>
                   </div>
-                  <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-violet-300 rounded-md">
+                  <div className="w-full flex flex-col gap-5">
+                  <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
                     <Image
                       src="/assets/black-buy.png"
                       width={30}
@@ -207,6 +150,7 @@ const ProductsDisplay = () => {
                     />
                     <p className="font-medium text-white">Add to cart</p>
                   </button>
+                  </div>
                 </div>
               </div>
             ))}

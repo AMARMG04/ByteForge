@@ -1,20 +1,32 @@
+
 import Image from 'next/image'
 import Carousel from './components/Carousel'
 import Navbar from './components/Navbar'
 import FrequentlyBought from './components/FrequentlyBought'
 
-export default function Home() {
+
+const getData = async () => {
+  const res = await fetch("http://localhost:3000/api/mostFrequentlyBought", { cache: "no-store" });
+  if(!res.ok){
+      throw new Error("Something Went Wrong")
+  }
+  return res.json();
+};
+
+
+export default async function Home() {
+
+  const mostFB = await getData();
   return (
     <>
       <Navbar />
-
       <section className='p-2 mb-10 sm:max-w-sm md:max-w-full lg:max-w-full'>
         <Carousel />
       </section>
 
       <section className='my-6 text-center'>
         <h1 className='text-2xl font-medium lg:text-3xl'>Most Frequently Bought</h1>
-        <FrequentlyBought />
+        <FrequentlyBought mostFB={mostFB} />
       </section>
 
       <section className='bg-[#100F0F] flex flex-col text-white p-4 gap-8'>

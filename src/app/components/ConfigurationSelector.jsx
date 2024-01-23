@@ -1,7 +1,7 @@
 "use client"
 import { useState } from 'react';
 
-const ConfigurationSelector = () => {
+const ConfigurationSelector = ({config}) => {
   const [selectedOptions, setSelectedOptions] = useState({ color: null, storage: null, capacity: null });
 
   const handleOptionSelect = (category, option) => {

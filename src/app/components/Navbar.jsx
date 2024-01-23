@@ -36,11 +36,11 @@ const Navbar = () => {
   };
 
   const menuLinks = [
-    { text: "Monitors", url: "/monitors" },
-    { text: "Processors", url: "/" },
-    { text: "CPU", url: "/" },
-    { text: "Accessories", url: "/" },
-    { text: "Audio", url: "/" },
+    { text: "Monitors", url: "/products/monitors" },
+    { text: "Processors", url: "/products/processors" },
+    { text: "Motherboard", url: "/products/motherboard" },
+    { text: "Accessories", url: "/products/accessories" },
+    { text: "Audio", url: "/products/audio" },
   ];
 
   const [navState, setNavState] = useState(false);
@@ -220,39 +220,6 @@ const Navbar = () => {
                 </Link>
               )
             }
-
-            {/* {loggedIn ? (
-              // Display profile and logout options when logged in
-              <div className="flex flex-row items-center ml-4">
-                <Link href="/profile">
-                  <Image
-                    src="/assets/profile.png"
-                    width={30}
-                    height={30}
-                    alt="profile"
-                    className="w-[24px] h-[24px]"
-                  />
-                </Link>
-                <button
-                  onClick={handleLogout}
-                  className="ml-2 text-white"
-                >
-                  Logout
-                </button>
-              </div>
-            ) : (
-              // Display login option when not logged in
-              <Link href="/auth">
-                <Image
-                  src="/assets/profile.png"
-                  width={30}
-                  height={30}
-                  alt="profile"
-                  className="ml-2 w-[24px] h-[24px]"
-                />
-              </Link>
-            )}
-             */}
 
             
           </div>

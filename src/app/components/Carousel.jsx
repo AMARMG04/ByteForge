@@ -9,7 +9,7 @@ const slides = [
   "/assets/Laptop.jpg",
   "/assets/CPU.jpg",
   "/assets/CPU2.jpg",
-  "/assets/Processor.jpg",
+  "/assets/Board.jpg",
 ];
 
 const Carousel = () => {
