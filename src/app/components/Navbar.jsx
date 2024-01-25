@@ -108,7 +108,7 @@ const Navbar = () => {
             <div className="hidden lg:flex">
               <ul className="flex flex-row gap-10 ">
                 {menuLinks.map((link, index) => (
-                  <li key={index} className="text-white hover:text-gray-500">
+                  <li key={index} className="text-white font-medium hover:text-gray-500">
                     <Link href={link.url}>{link.text}</Link>
                   </li>
                 ))}

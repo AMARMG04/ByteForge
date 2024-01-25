@@ -1,11 +1,15 @@
 import React from "react";
 import Navbar from "./Navbar";
+import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const AddToCart = ({ data }) => {
   const cartEmpty = false;
   const cartItems = data.cart_items;
   const userId = data.cart_items[0].userId;
+
+  const router = useRouter();
 
   const [localCartItems, setLocalCartItems] = React.useState(cartItems);
 
@@ -136,10 +140,8 @@ const AddToCart = ({ data }) => {
                 </div>
 
                 <div className="flex flex-row justify-between">
-                  <p>Tax</p>
-                  <p className="font-bold">
-                    {formatCurrency(Math.round((calculateTotal() * 18) / 100))}{" "}
-                  </p>
+                  <p>Delivery Charge</p>
+                  <p className="font-bold">{formatCurrency(0)} </p>
                 </div>
 
                 <hr />
@@ -147,17 +149,28 @@ const AddToCart = ({ data }) => {
                 <div className="flex flex-row justify-between">
                   <p>Grand Total</p>
                   <p className="font-bold text-2xl">
-                    {formatCurrency(
-                      calculateTotal() +
-                        Math.round(calculateTotal() * (18 / 100))
-                    )}
+                    {formatCurrency(calculateTotal())}
                   </p>
                 </div>
 
                 <div className="flex justify-center ">
-                  <button className=" bg-indigo-500 text-white px-20 py-4 rounded text-lg font-medium">
-                    Place Order
-                  </button>
+                  <Link
+                    href={{
+                      pathname: "/checkout", // Your checkout page path
+                      query: {
+                        orderSummary: JSON.stringify(localCartItems),
+                        total: calculateTotal(),
+                        name:{
+                          first:'John',
+                          second:'Doe'
+                        }
+                      },
+                    }}
+                  >
+                    <button className=" bg-indigo-500 text-white px-20 py-4 rounded text-lg font-medium">
+                      Place Order
+                    </button>
+                  </Link>
                 </div>
               </div>
               {/* Delivery Details Section */}
