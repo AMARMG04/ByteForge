@@ -160,10 +160,6 @@ const AddToCart = ({ data }) => {
                       query: {
                         orderSummary: JSON.stringify(localCartItems),
                         total: calculateTotal(),
-                        name:{
-                          first:'John',
-                          second:'Doe'
-                        }
                       },
                     }}
                   >
