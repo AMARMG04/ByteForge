@@ -14,13 +14,13 @@ const ProductsDisplay = ({monitors, filters}) => {
   return (
     <>
       <div className="mx-2 flex flex-col gap-6 mt-10">
-        <div className="flex flex-row gap-2 lg:hidden">
+        <div className="flex flex-row gap-2 lg:hidden" onClick={toggleFilters}>
           <Image
             src="/assets/filter.png"
             width={30}
             height={30}
             alt="Filter"
-            onClick={toggleFilters}
+            
             style={{ cursor: "pointer" }}
             className="w-[24px] h-[24px]"
           />
@@ -104,15 +104,17 @@ const ProductsDisplay = ({monitors, filters}) => {
                 key={index}
                 className="flex flex-row gap-4 shadow-2xl rounded-[10px] lg:gap-10 max-h-[400px]"
               >
-
+                  
                 <div className="relative w-1/2 lg:w-2/5">
+                  <Link href={`/products/monitors/${monitor.name}`}>
                 <Image
                   src={monitor.images[0]}
                   // width={100}
                   // height={100}
                   fill
                   className="w-[155px] rounded-l-[10px] border-r-2 border-gray-300 object-scale-down md:w-2/5 lg:w-[400px]"
-                />
+                  />
+                  </Link>
                 </div>
 
                 <div className="flex flex-col gap-4 my-4 lg:w-4/6">

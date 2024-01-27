@@ -125,12 +125,14 @@ const Navbar = () => {
           >
             <ul>
               {menuLinks.map((link, index) => (
+                <Link href={link.url}>
                 <li
                   key={index}
                   className="px-20 py-6 text-2xl shadow-sm shadow-emerald-400 my-8 rounded-md md:px-44 md:py-20"
                 >
-                  <Link href={link.url}>{link.text}</Link>
+                  {link.text}
                 </li>
+                </Link>
               ))}
             </ul>
           </div>
