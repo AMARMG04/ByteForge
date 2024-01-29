@@ -14,6 +14,7 @@ const getData = async (product: string) => {
 const page = async ({ params }: any) => {
   const product = params.productName;
   const item = await getData(product);
+
   return (
     <div>
       <Navbar />

@@ -1,22 +1,27 @@
 import type { Metadata } from 'next'
-import { Poppins, Inter, Manrope } from 'next/font/google'
+import { Poppins, Inter_Tight, Manrope, Urbanist } from 'next/font/google'
 import './globals.css'
 
-const poppins = Poppins({
-  subsets: ['latin'], 
-  variable: "--font-poppins",
-  weight: ['100', '200', '300', '400', '500']
-});
+// const poppins = Poppins({
+//   subsets: ['latin'], 
+//   variable: "--font-poppins",
+//   weight: ['100', '200', '300', '400', '500']
+// });
 
-const inter = Inter({
+const inter = Inter_Tight({
   subsets: ['latin'], 
   variable: "--font-inter",
 });
 
-const manrope = Manrope({
-  subsets: ['latin'], 
-  variable: "--font-inter",
-});
+// const urbanist = Urbanist({
+//   subsets: ['latin'], 
+//   variable: "--font-inter",
+// });
+
+// const manrope = Manrope({
+//   subsets: ['latin'], 
+//   variable: "--font-inter",
+// });
 
 export const metadata: Metadata = {
   title: 'Byte Forge',
@@ -30,7 +35,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${manrope.className} bg-white mx-auto h-screen sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-full`}>{children}</body>
+      <body className={`${inter.className} bg-white mx-auto h-screen sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-full`}>{children}</body>
     </html>
   )
 }

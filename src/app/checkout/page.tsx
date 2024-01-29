@@ -125,7 +125,7 @@ const page = ({ searchParams }: any) => {
 
 
                 <div className='grow border-2 border-black rounded-sm p-4 flex flex-col'>
-                    <h1 className='text-2xl font-semibold'>1. Checkout Details</h1>
+                    <h1 className='text-2xl font-semibold'>1. Delivery Details</h1>
                     <div className='m-4'>
                         <div className='m-2 flex flex-col gap-4'>
                             <div className='flex flex-col gap-4 lg:flex-row lg:gap-40'>

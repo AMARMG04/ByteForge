@@ -17,6 +17,7 @@ const DisplayImage = ({ slides }) => {
                 src={slide}
                 width={100}
                 height={100}
+                alt='product images'
                 className={`w-[58px] h-[58px] rounded-lg object-cover border-2 border-gray-300 ${
                     selectedImageIndex === index ? "border-red-900" : ""
                   }`}
@@ -29,7 +30,7 @@ const DisplayImage = ({ slides }) => {
           src={slides[selectedImageIndex]}
           alt="Logo"
           fill
-          // className="w-full h-96 rounded-lg lg:h-2/3 xl:h-full object-scale-down"
+          sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
           className="object-scale-down"
         />
       </div>

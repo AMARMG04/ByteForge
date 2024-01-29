@@ -72,7 +72,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" max-w-screen-2xl bg-[#100F0F] h-32 lg:h-[100px] xl:max-w-full">
+    <div className=" max-w-screen-2xl bg-black h-32 lg:h-[100px] xl:max-w-full">
       <div className="w-full flex flex-col gap-4 mx-auto">
         <div className="flex flex-row justify-between mt-6 mx-2 z-10 lg:items-center lg:mt-10 lg:justify-between">
           {navState ? (
@@ -102,6 +102,7 @@ const Navbar = () => {
                 height={150}
                 alt="Logo"
                 className="ml-2"
+                style={{ width: "auto", height: "auto" }}
               />
             </Link>
 
@@ -125,7 +126,7 @@ const Navbar = () => {
           >
             <ul>
               {menuLinks.map((link, index) => (
-                <Link href={link.url}>
+                <Link href={link.url} key={index}>
                 <li
                   key={index}
                   className="px-20 py-6 text-2xl shadow-sm shadow-emerald-400 my-8 rounded-md md:px-44 md:py-20"

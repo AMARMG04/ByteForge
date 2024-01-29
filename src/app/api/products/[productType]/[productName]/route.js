@@ -4,6 +4,7 @@ import { connectToDatabase, disconnectFromDatabase } from '@/app/lib/database';
 
 export const GET = async (request, {params}) => {
     const product = params.productName;
+
   try {
     const client = await connectToDatabase();
     const db = client.db('byteforge');

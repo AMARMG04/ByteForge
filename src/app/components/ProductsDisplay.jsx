@@ -3,24 +3,80 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import AddToCartButton from "./AddToCartButton";
 
-const ProductsDisplay = ({monitors, filters}) => {
+const ProductsDisplay = ({ monitors, filters }) => {
   const filteredData = filters.options;
+
   const [showFilters, setShowFilters] = useState(false);
+
+  const [selectedFilters, setSelectedFilters] = useState({});
+
+  // Function to toggle a filter
+  const toggleFilter = (category, option) => {
+    setSelectedFilters((prevFilters) => {
+      const newFilters = { ...prevFilters };
+
+      // Toggle the selected option for the given category
+      if (newFilters[category]) {
+        if (newFilters[category].includes(option)) {
+          newFilters[category] = newFilters[category].filter(
+            (item) => item !== option
+          );
+        } else {
+          newFilters[category] = [...newFilters[category], option];
+        }
+      } else {
+        newFilters[category] = [option];
+      }
+
+      return newFilters;
+    });
+  };
+
+  // Function to check if a product matches the selected filters
+  const isProductFiltered = (product) => {
+    for (const [category, options] of Object.entries(selectedFilters)) {
+      if (
+        category === "Brand" &&
+        options.length > 0 &&
+        !options.includes(product[category.toLowerCase()])
+      ) {
+        return false;
+      } else if (category !== "Brand" && options.length > 0) {
+        // Check if the category is inside the specifications object
+        if (!product.specifications || !product.specifications[category]) {
+          return false;
+        }
+
+        // Check if any of the selected options match the product's category
+        const productOptions = product.specifications[category];
+        if (
+          !options.some((selectedOption) =>
+            productOptions.includes(selectedOption)
+          )
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
+  };
+
+  const filteredMonitors = monitors.filter(isProductFiltered);
 
   const toggleFilters = () => {
     setShowFilters(!showFilters);
-  }
+  };
   return (
     <>
       <div className="mx-2 flex flex-col gap-6 mt-10">
         <div className="flex flex-row gap-2 lg:hidden" onClick={toggleFilters}>
           <Image
-            src="/assets/filter.png"
+            src="/assets/filqter.png"
             width={30}
             height={30}
             alt="Filter"
-            
             style={{ cursor: "pointer" }}
             className="w-[24px] h-[24px]"
           />
@@ -48,26 +104,31 @@ const ProductsDisplay = ({monitors, filters}) => {
             </div>
             <hr className="my-4" />
             <div className="mx-6">
-              {Object.entries(filteredData).map(([category,options],  index) => (
-                <div key={index} className="mb-6">
-                  <h4 className="font-medium text-xl mb-2">
-                    {category}
-                  </h4>
-                  <div className="flex flex-col gap-2">
-                    {options.map((option, optionIndex) => (
-                      <div key={optionIndex} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
-                        />
-                        <label htmlFor={`checkbox-${index}-${optionIndex}`}>
-                          {option}
-                        </label>
-                      </div>
-                    ))}
+              {Object.entries(filteredData).map(
+                ([category, options], index) => (
+                  <div key={index} className="mb-6">
+                    <h4 className="font-medium text-xl mb-2">{category}</h4>
+                    <div className="flex flex-col gap-2">
+                      {options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`checkbox-${index}-${optionIndex}`}
+                            onChange={() => toggleFilter(category, option)}
+                            checked={selectedFilters[category]?.includes(
+                              option
+                            )}
+                            className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
+                          />
+                          <label htmlFor={`checkbox-${index}-${optionIndex}`}>
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
         )}
@@ -75,83 +136,96 @@ const ProductsDisplay = ({monitors, filters}) => {
           <div className="hidden lg:flex border-2 rounded-md border-black w-72 h-fit">
             <div className="mx-6">
               <h1 className="text-2xl my-4 font-semibold">Filters</h1>
-              {Object.entries(filteredData).map(([category, options], index) => (
-                <div key={index} className="mb-6">
-                  <h4 className="font-medium text-xl mb-2">
-                    {category}
-                  </h4>
-                  <div className="flex flex-col gap-2">
-                    {options.map((option, optionIndex) => (
-                      <div key={optionIndex} className="flex items-center">
-                        <input
-                          type="checkbox"
-                          className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
-                        />
-                        <label htmlFor={`checkbox-${index}-${optionIndex}`}>
-                          {option}
-                        </label>
-                      </div>
-                    ))}
+              {Object.entries(filteredData).map(
+                ([category, options], index) => (
+                  <div key={index} className="mb-6">
+                    <h4 className="font-medium text-xl mb-2">{category}</h4>
+                    <div className="flex flex-col gap-2">
+                      {options.map((option, optionIndex) => (
+                        <div key={optionIndex} className="flex items-center">
+                          <input
+                            type="checkbox"
+                            id={`checkbox-${index}-${optionIndex}`}
+                            onChange={() => toggleFilter(category, option)}
+                            checked={selectedFilters[category]?.includes(
+                              option
+                            )}
+                            className="mr-2 h-5 w-5 border rounded border-gray-700 checked:bg-transparent checked:border-gray-600 focus:outline-none focus:border-gray-600 focus:ring focus:ring-gray-300"
+                          />
+                          <label htmlFor={`checkbox-${index}-${optionIndex}`}>
+                            {option}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                </div>
-              ))}
+                )
+              )}
             </div>
           </div>
           <div className="flex flex-col gap-10  my-10 lg:w-full">
-            <h1 className="text-2xl font-semibold">Products({monitors.length})</h1>
-            {monitors.map((monitor, index) => (
+            <h1 className="text-2xl font-semibold">
+              Products({filteredMonitors.length})
+            </h1>
+            {filteredMonitors.map((monitor, index) => (
               <div
                 key={index}
                 className="flex flex-row gap-4 shadow-2xl rounded-[10px] lg:gap-10 max-h-[400px]"
               >
-                  
-                <div className="relative w-1/2 lg:w-2/5">
+                <div className="relative w-1/2 lg:w-2/5" style={{position: "relative"}}>
                   <Link href={`/products/monitors/${monitor.name}`}>
-                <Image
-                  src={monitor.images[0]}
-                  // width={100}
-                  // height={100}
-                  fill
-                  className="w-[155px] rounded-l-[10px] border-r-2 border-gray-300 object-scale-down md:w-2/5 lg:w-[400px]"
-                  />
+                    <Image
+                      src={monitor.images[0]}
+                      sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      fill
+                      alt="Product Image"
+                      className="rounded-l-[10px] border-r-2 border-gray-300 object-scale-down md:w-2/5 lg:w-[400px]"
+                    />
                   </Link>
                 </div>
 
                 <div className="flex flex-col gap-4 my-4 lg:w-4/6">
                   <div className="">
-                    <h1 className="font-medium text-sm lg:text-lg ">{monitor.brand}</h1>
+                    <h1 className="font-medium text-sm lg:text-lg ">
+                      {monitor.brand}
+                    </h1>
                     <Link href={`/products/monitors/${monitor.name}`}>
                       <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-2xl lg:max-w-full">
-                          {monitor.name}
+                        {monitor.name}
                       </h1>
                     </Link>
                   </div>
                   <div>
-                    <p className="text-red-400 lg:text-2xl">-{monitor.discount_percentage}%</p>
+                    <p className="text-red-400 lg:text-2xl">
+                      -{monitor.discount_percentage}%
+                    </p>
                     <p className="text-3xl lg:text-4xl">₹{monitor.mrp}/-</p>
-                    <p className="line-through lg:text-xl">MRP:₹{monitor.mrp}/-</p>
+                    <p className="line-through lg:text-xl">
+                      MRP:₹{monitor.mrp}/-
+                    </p>
                   </div>
                   <div className="w-full flex flex-col gap-5">
-                  <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
-                    <Image
-                      src="/assets/black-buy.png"
-                      width={30}
-                      height={30}
-                      alt="Buy"
-                      className="w-[32px] h-[32px] mr-2"
-                    />
-                    <p className="font-medium">Buy Now</p>
-                  </button>
-                  <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-black rounded-md">
-                    <Image
-                      src="/assets/cart.png"
-                      width={30}
-                      height={30}
-                      alt="Cart"
-                      className="w-[32px] h-[32px] mr-2"
-                    />
-                    <p className="font-medium text-white">Add to cart</p>
-                  </button>
+                    <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
+                      <Image
+                        src="/assets/black-buy.png"
+                        width={30}
+                        height={30}
+                        alt="Buy"
+                        className="w-[32px] h-[32px] mr-2"
+                      />
+                      <p className="font-medium">Buy Now</p>
+                    </button>
+                    {/* <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-black rounded-md">
+                      <Image
+                        src="/assets/cart.png"
+                        width={30}
+                        height={30}
+                        alt="Cart"
+                        className="w-[32px] h-[32px] mr-2"
+                      />
+                      <p className="font-medium text-white">Add to cart</p>
+                    </button> */}
+                    <AddToCartButton product={monitor} />
                   </div>
                 </div>
               </div>
