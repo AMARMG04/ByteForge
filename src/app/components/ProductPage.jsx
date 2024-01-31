@@ -3,6 +3,8 @@ import Image from "next/image";
 import ConfigurationSelector from "../components/ConfigurationSelector";
 import DisplayImage from "../components/DisplayImage";
 import AddToCartButton from "../components/AddToCartButton";
+import BuyNowButton from "../components/BuyNowButton";
+import Link from "next/link";
 
 const ProductPage = ({ item }) => {
   const slides = item[0].images;
@@ -20,8 +22,7 @@ const ProductPage = ({ item }) => {
           />
         </div>
         <div className="flex flex-col gap-6 p-4 lg:flex-row lg:gap-4">
-          
-          <DisplayImage slides={slides}/>
+          <DisplayImage slides={slides} />
 
           <hr />
 
@@ -50,17 +51,23 @@ const ProductPage = ({ item }) => {
             </div>
 
             <div className="flex flex-col gap-5 justify-start items-start">
-              <button className=" flex flex-row justify-center items-center w-full py-3 lg:py-5 xl:max-w-lg bg-indigo-200 rounded-md">
-                <Image
-                  src="/assets/black-buy.png"
-                  width={30}
-                  height={30}
-                  alt="Buy"
-                  className="w-[32px] h-[32px] mr-2"
-                />
-                <p className="font-medium">Buy Now</p>
-              </button>
-              
+              <Link
+                href={{
+                  pathname: "/checkout",
+                  query: {
+                    orderSummary: JSON.stringify(
+                      {
+                        productName: item[0].name,
+                        quantity: 1,
+                        productPrice: item[0].mrp,
+                      },
+                    ),
+                  },
+                }}
+              >
+                <BuyNowButton />
+              </Link>
+
               <AddToCartButton product={item[0]} />
             </div>
           </div>

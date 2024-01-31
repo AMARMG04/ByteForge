@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import AddToCartButton from "./AddToCartButton";
+import BuyNowButton from "./BuyNowButton";
 
 const ProductsDisplay = ({ monitors, filters }) => {
   const filteredData = filters.options;
@@ -73,7 +74,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
       <div className="mx-2 flex flex-col gap-6 mt-10">
         <div className="flex flex-row gap-2 lg:hidden" onClick={toggleFilters}>
           <Image
-            src="/assets/filqter.png"
+            src="/assets/filter.png"
             width={30}
             height={30}
             alt="Filter"
@@ -205,7 +206,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     </p>
                   </div>
                   <div className="w-full flex flex-col gap-5">
-                    <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
+                    {/* <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
                       <Image
                         src="/assets/black-buy.png"
                         width={30}
@@ -214,7 +215,8 @@ const ProductsDisplay = ({ monitors, filters }) => {
                         className="w-[32px] h-[32px] mr-2"
                       />
                       <p className="font-medium">Buy Now</p>
-                    </button>
+                    </button> */}
+                    <BuyNowButton product={monitor} />
                     {/* <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-black rounded-md">
                       <Image
                         src="/assets/cart.png"

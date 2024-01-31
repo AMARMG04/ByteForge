@@ -7,6 +7,9 @@ import Image from 'next/image'
 const page = ({ searchParams }: any) => {
     const localCartItems = JSON.parse(searchParams.orderSummary)
 
+    console.log(localCartItems);
+    console.log(typeof(localCartItems));
+
     const formatCurrency = (amount: number) => {
         const currencyFormatter = new Intl.NumberFormat("en-IN", {
             style: "currency",

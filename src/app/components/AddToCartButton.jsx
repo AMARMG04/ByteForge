@@ -61,7 +61,7 @@ const AddToCartButton = ({ product }) => {
     }
   }
   return (
-    <button className=" flex flex-row justify-center items-center py-3 w-full lg:py-5 xl:max-w-lg bg-black rounded-md" onClick={handleButtonClick}>
+    <button className=" flex flex-row justify-center items-center py-3 w-full lg:py-5 xl:max-w-md bg-black rounded-md" onClick={handleButtonClick}>
       <Image
         src="/assets/cart.png"
         width={30}

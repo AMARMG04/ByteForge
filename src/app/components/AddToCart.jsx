@@ -8,9 +8,9 @@ const AddToCart = ({ data }) => {
   const cartEmpty = false;
   const cartItems = data.cart_items;
   const userId = data.cart_items[0].userId;
-
+  
   const router = useRouter();
-
+  
   const [localCartItems, setLocalCartItems] = React.useState(cartItems);
 
   const updateQuantity = async (productId, newQuantity) => {
