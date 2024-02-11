@@ -51,7 +51,7 @@ const ProductPage = ({ item }) => {
             </div>
 
             <div className="flex flex-col gap-5 justify-start items-start">
-              <Link
+              <Link className="flex flex-row justify-center items-center w-full xl:max-w-md"
                 href={{
                   pathname: "/checkout",
                   query: {
@@ -65,7 +65,7 @@ const ProductPage = ({ item }) => {
                   },
                 }}
               >
-                <BuyNowButton />
+              <BuyNowButton />
               </Link>
 
               <AddToCartButton product={item[0]} />
