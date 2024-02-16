@@ -13,6 +13,7 @@ const getProductData = async (product:string) => {
 
 const page = async({params}:any) => {
   const product = params.productType;
+  
   const data = await getProductData(product);
   return (
     <div>

@@ -14,7 +14,7 @@ export const POST = async(req, res) =>{
         const db = client.db('byteforge');
 
       // Check if user with given UID already exists
-      const existingUser = await db.collection("users").findOne({ userID });
+      const existingUser = await db.collection("users").findOne({ userId: userID });
 
       if (existingUser) {
         return new NextResponse({

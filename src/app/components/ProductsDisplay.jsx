@@ -13,6 +13,24 @@ const ProductsDisplay = ({ monitors, filters }) => {
 
   const [selectedFilters, setSelectedFilters] = useState({});
 
+  const formatCurrency = (amount) => {
+    const currencyFormatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2,
+    });
+
+    // Extracting parts from formatted string
+    const parts = currencyFormatter.formatToParts(amount);
+
+    // Adding space between symbol and digits
+    const formattedAmount = parts
+      .map((part) => (part.type === "currency" ? part.value + " " : part.value))
+      .join("");
+
+    return formattedAmount.replace("₹", "Rs. ");
+  };
+
   // Function to toggle a filter
   const toggleFilter = (category, option) => {
     setSelectedFilters((prevFilters) => {
@@ -200,9 +218,9 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     <p className="text-red-400 lg:text-2xl">
                       -{monitor.discount_percentage}%
                     </p>
-                    <p className="text-3xl lg:text-4xl">₹{monitor.mrp}/-</p>
+                    <p className="text-3xl lg:text-4xl">{formatCurrency(monitor.discountedPrice)}</p>
                     <p className="line-through lg:text-xl">
-                      MRP:₹{monitor.mrp}/-
+                        {formatCurrency(monitor.mrp)}/-
                     </p>
                   </div>
                   <div className="w-full flex flex-col gap-5">

@@ -5,9 +5,35 @@ import DisplayImage from "../components/DisplayImage";
 import AddToCartButton from "../components/AddToCartButton";
 import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
+import { format } from "path";
 
 const ProductPage = ({ item }) => {
   const slides = item[0].images;
+
+  const formatCurrency = (amount) => {
+    const currencyFormatter = new Intl.NumberFormat("en-IN", {
+      style: "currency",
+      currency: "INR",
+      minimumFractionDigits: 2,
+    });
+
+
+    // Extracting parts from formatted string
+    const parts = currencyFormatter.formatToParts(amount);
+
+    // Adding space between symbol and digits
+    const formattedAmount = parts
+      .map((part) => (part.type === "currency" ? part.value + " " : part.value))
+      .join("");
+
+    return formattedAmount.replace("₹", "Rs. ");
+  };
+
+  const calculateTotal = () => {
+    return localCartItems.reduce((total, item) => {
+      return total + item.quantity * item.productPrice;
+    }, 0);
+  };
 
   return (
     <div>
@@ -26,19 +52,28 @@ const ProductPage = ({ item }) => {
 
           <hr />
 
-          <div className="flex flex-col gap-1 w-full">
+          <div className="flex flex-col gap-2 w-full">
             <h1 className="font-medium text-sm lg:text-lg">{item[0].brand}</h1>
             <h1 className="font-medium text-xl max-w-full md:max-w-full lg:text-3xl lg:max-w-full">
               {item[0].description}
             </h1>
-            <p className="mt-4">
+            {/* <p className="mt-4">
               ✩✩✩✩✩ (0){" "}
               <span className="text-purple-900 underline ml-4">
                 Write a review
               </span>
-            </p>
+            </p> */}
 
-            <ConfigurationSelector config={item[0]} />
+
+            {
+              item[0].configuration_available === "yes" ? <div>
+              <p className="text-xl font-medium mt-5">Select Variant</p>
+              <ConfigurationSelector config={item[0]} />
+              </div>:""
+
+            }
+
+
 
             <hr />
 
@@ -46,8 +81,9 @@ const ProductPage = ({ item }) => {
               <p className="text-red-400 lg:text-2xl">
                 -{item[0].discount_percentage}%
               </p>
-              <p className="text-3xl lg:text-4xl">₹{item[0].mrp}/-</p>
-              <p className="line-through lg:text-xl">MRP:₹{item[0].mrp}/-</p>
+              {/* <p className="text-3xl lg:text-4xl">₹{item[0].mrp}/-</p> */}
+              <p className="text-3xl lg:text-4xl">{formatCurrency(item[0].discountedPrice)}</p>
+              <p className="line-through lg:text-xl">{formatCurrency(item[0].mrp)}</p>
             </div>
 
             <div className="flex flex-col gap-5 justify-start items-start">
