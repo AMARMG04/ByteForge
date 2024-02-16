@@ -1,11 +1,9 @@
 import React from "react";
-import Image from "next/image";
 import ConfigurationSelector from "../components/ConfigurationSelector";
 import DisplayImage from "../components/DisplayImage";
 import AddToCartButton from "../components/AddToCartButton";
 import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
-import { format } from "path";
 
 const ProductPage = ({ item }) => {
   const slides = item[0].images;
@@ -38,15 +36,7 @@ const ProductPage = ({ item }) => {
   return (
     <div>
       <div>
-        <div className="flex justify-end p-4">
-          <Image
-            src="/assets/share.png"
-            width={150}
-            height={150}
-            alt="Logo"
-            className="w-[32px] h-[32px]"
-          />
-        </div>
+       
         <div className="flex flex-col gap-6 p-4 lg:flex-row lg:gap-4">
           <DisplayImage slides={slides} />
 
@@ -77,13 +67,15 @@ const ProductPage = ({ item }) => {
 
             <hr />
 
-            <div className="">
+            <div className="flex flex-col gap-2">
+              {(item[0].quantity === 0) ? <p className="text-red-400 lg:text-xl font-medium">Out of Stock</p> : (item[0].quantity >= 5) ? <p className="text-green-500 font-medium text-xl">In Stock</p> : <p className="text-red-500 font-medium text-xl">Only {item[0].quantity} left in stock, hurry up!</p>}
+              <div>
               <p className="text-red-400 lg:text-2xl">
                 -{item[0].discount_percentage}%
               </p>
-              {/* <p className="text-3xl lg:text-4xl">₹{item[0].mrp}/-</p> */}
               <p className="text-3xl lg:text-4xl">{formatCurrency(item[0].discountedPrice)}</p>
               <p className="line-through lg:text-xl">{formatCurrency(item[0].mrp)}</p>
+              </div>
             </div>
 
             <div className="flex flex-col gap-5 justify-start items-start">
