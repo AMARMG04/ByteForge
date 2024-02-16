@@ -13,6 +13,7 @@ const AddToCart = ({ data }) => {
   
   const [localCartItems, setLocalCartItems] = React.useState(cartItems);
 
+
   const updateQuantity = async (productId, newQuantity) => {
     try {
       const response = await fetch("/api/cart/updateQuantity", {
