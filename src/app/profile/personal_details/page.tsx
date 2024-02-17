@@ -32,7 +32,7 @@ const page = async() => {
             <div className='lg:flex lg:flex-col lg:justify-center lg:items-center lg:h-[800px]'>
                 <div className='lg:max-w-fit'>
                     <h1 className='m-2 text-2xl font-medium'>Personal Details</h1>
-                    <UserDetailsForm user={user} uid={uid}/>
+                    <UserDetailsForm user={user}/>
                 </div>
             </div>
         </div>

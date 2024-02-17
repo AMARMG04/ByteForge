@@ -37,5 +37,6 @@ export const personalDetails = async(formdata: FormData, userId: string|null) =>
     })
 
     const data = await res.json()
+    console.log(data)
     return data
 }

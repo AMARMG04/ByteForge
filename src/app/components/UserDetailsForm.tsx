@@ -1,8 +1,12 @@
 "use client"
 
 import React, { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { personalDetails } from '@/app/actions/personalDetails'
-const UserDetailsForm = ({user}:any, {uid}:any) => {
+
+const UserDetailsForm = ({user}:any) => {
+    const searchParams = useSearchParams()
+    const uid = searchParams.get('userId')
 
     const [formValues, setFormValues] = useState({
         firstName: user.firstName || '',

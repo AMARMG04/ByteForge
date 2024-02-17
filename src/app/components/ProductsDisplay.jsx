@@ -28,7 +28,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
       .map((part) => (part.type === "currency" ? part.value + " " : part.value))
       .join("");
 
-    return formattedAmount.replace("₹", "Rs. ");
+    return formattedAmount.replace("₹", "Rs.");
   };
 
   // Function to toggle a filter
@@ -218,8 +218,8 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     <p className="text-red-400 lg:text-2xl">
                       -{monitor.discount_percentage}%
                     </p>
-                    <p className="text-3xl lg:text-4xl">{formatCurrency(monitor.discountedPrice)}</p>
-                    <p className="line-through lg:text-xl">
+                    <p className="text-2xl font-medium lg:text-4xl">{formatCurrency(monitor.discountedPrice)}</p>
+                    <p className="line-through font-medium lg:text-xl">
                         {formatCurrency(monitor.mrp)}/-
                     </p>
                   </div>
