@@ -3,12 +3,10 @@ import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const BuyNowButton = ({monitor}) => {
-  
+const BuyNowButton = () => {
+
   const router = useRouter();
-//   const handleButtonClick = () => {
-//     console.log("Buy Now");
-//   };
+
 
   return (
     <button

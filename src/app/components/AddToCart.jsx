@@ -159,6 +159,7 @@ const AddToCart = ({ data }) => {
                     href={{
                       pathname: "/checkout", // Your checkout page path
                       query: {
+                        userId: localCartItems[0].userId,
                         orderSummary: JSON.stringify(localCartItems),
                         total: calculateTotal(),
                       },
@@ -205,9 +206,9 @@ const AddToCart = ({ data }) => {
             {/* Cart Details Section */}
             <div className="my-4 lg:mt-0 grow">
               <div className="border-2 border-black rounded p-4 flex flex-col gap-4 mb-2">
-                <div className="flex flex-row gap-4">
+                <div className="flex flex-row gap-2 items-center">
                   <h1 className="text-xl font-medium">My Cart</h1>
-                  <div className="w-[30px] h-[30px] rounded-full bg-red-500 flex justify-center items-center">
+                  <div className="w-[30px] h-[30px] rounded-full bg-red-500 text-white flex justify-center items-center">
                     <p className="font-medium">{localCartItems.length}</p>
                   </div>
                 </div>

@@ -2,13 +2,32 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddToCartButton from "./AddToCartButton";
 import BuyNowButton from "./BuyNowButton";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
+import { app } from "../firebase/config";
 
 const ProductsDisplay = ({ monitors, filters }) => {
   const filteredData = filters.options;
+  const [userId, setUserId] = useState(null);
 
+  useEffect(() => {
+    const auth = getAuth(app);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUserId(user.uid);
+      } else {
+        setUserId(null);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  
   const [showFilters, setShowFilters] = useState(false);
 
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -224,27 +243,24 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     </p>
                   </div>
                   <div className="w-full flex flex-col gap-5">
-                    {/* <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-indigo-200 rounded-md">
-                      <Image
-                        src="/assets/black-buy.png"
-                        width={30}
-                        height={30}
-                        alt="Buy"
-                        className="w-[32px] h-[32px] mr-2"
-                      />
-                      <p className="font-medium">Buy Now</p>
-                    </button> */}
-                    <BuyNowButton product={monitor} />
-                    {/* <button className=" flex flex-row justify-center items-center h-12 w-44 md:h-14 md:w-72 lg:w-2/3 lg:h-16 bg-black rounded-md">
-                      <Image
-                        src="/assets/cart.png"
-                        width={30}
-                        height={30}
-                        alt="Cart"
-                        className="w-[32px] h-[32px] mr-2"
-                      />
-                      <p className="font-medium text-white">Add to cart</p>
-                    </button> */}
+                    
+                    <Link href={{
+                      pathname: "/checkout", // Your checkout page path
+                      query: {
+                        orderSummary: JSON.stringify([{
+                          userId: userId,
+                          productId: monitor._id,
+                          productBrand: monitor.brand,
+                          productName: monitor.name,
+                          productPrice: monitor.discountedPrice,
+                          quantity:1
+                        }]),
+                      },
+                    }}
+                    >
+                    <BuyNowButton />
+                    </Link>
+                    
                     <AddToCartButton product={monitor} />
                   </div>
                 </div>

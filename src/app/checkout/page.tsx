@@ -5,6 +5,7 @@ import UserDetailsForm from '../components/UserDetailsForm'
 
 const getData = async (uid: string | null) => {
     const res = await fetch("http://localhost:3000/api/personalDetails/fetchData", { 
+        cache: "no-store",
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -23,7 +24,6 @@ const page = async({ searchParams }: any) => {
     const localCartItems = JSON.parse(searchParams.orderSummary)
     const details = await getData(localCartItems[0].userId)
     const user = details.user_details[0]
-
 
     const formatCurrency = (amount: number) => {
         const currencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -145,7 +145,7 @@ const page = async({ searchParams }: any) => {
                 <div className='grow border-2 border-black rounded-sm p-4 flex flex-col'>
                     <h1 className='text-2xl font-semibold'>1. Delivery Details</h1>
                     <div className='m-4'>      
-                        <UserDetailsForm user={user} uid={localCartItems[0].userId}/>
+                        <UserDetailsForm user={user}/>
                     </div>
                     <h1 className='text-2xl font-semibold'>2. Payment Details</h1>
 
