@@ -5,8 +5,8 @@ import AddToCartButton from "../components/AddToCartButton";
 import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
 
-const ProductPage = ({ item }) => {
-  const slides = item[0].images;
+const ProductPage = ({ item, user }) => {
+  const slides = item.images;
 
   const formatCurrency = (amount) => {
     const currencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -43,9 +43,9 @@ const ProductPage = ({ item }) => {
           <hr />
 
           <div className="flex flex-col gap-2 w-full">
-            <h1 className="font-medium text-sm lg:text-lg">{item[0].brand}</h1>
+            <h1 className="font-medium text-sm lg:text-lg">{item.brand}</h1>
             <h1 className="font-medium text-xl max-w-full md:max-w-full lg:text-3xl lg:max-w-full">
-              {item[0].description}
+              {item.description}
             </h1>
             {/* <p className="mt-4">
               ✩✩✩✩✩ (0){" "}
@@ -56,9 +56,9 @@ const ProductPage = ({ item }) => {
 
 
             {
-              item[0].configuration_available === "yes" ? <div>
+              item.configuration_available === "yes" ? <div>
               <p className="text-xl font-medium mt-5">Select Variant</p>
-              <ConfigurationSelector config={item[0]} />
+              <ConfigurationSelector config={item} />
               </div>:""
 
             }
@@ -68,13 +68,13 @@ const ProductPage = ({ item }) => {
             <hr />
 
             <div className="flex flex-col gap-2">
-              {(item[0].quantity === 0) ? <p className="text-red-400 lg:text-xl font-medium">Out of Stock</p> : (item[0].quantity >= 5) ? <p className="text-green-500 font-medium text-xl">In Stock</p> : <p className="text-red-500 font-medium text-xl">Only {item[0].quantity} left in stock, hurry up!</p>}
+              {(item.quantity === 0) ? <p className="text-red-400 lg:text-xl font-medium">Out of Stock</p> : (item.quantity >= 5) ? <p className="text-green-500 font-medium text-xl">In Stock</p> : <p className="text-red-500 font-medium text-xl">Only {item.quantity} left in stock, hurry up!</p>}
               <div>
               <p className="text-red-400 lg:text-2xl">
-                -{item[0].discount_percentage}%
+                -{item.discount_percentage}%
               </p>
-              <p className="text-3xl lg:text-4xl">{formatCurrency(item[0].discountedPrice)}</p>
-              <p className="line-through lg:text-xl">{formatCurrency(item[0].mrp)}</p>
+              <p className="text-3xl lg:text-4xl">{formatCurrency(item.discountedPrice)}</p>
+              <p className="line-through lg:text-xl">{formatCurrency(item.mrp)}</p>
               </div>
             </div>
 
@@ -83,20 +83,21 @@ const ProductPage = ({ item }) => {
                 href={{
                   pathname: "/checkout",
                   query: {
-                    orderSummary: JSON.stringify(
-                      {
-                        productName: item[0].name,
-                        quantity: 1,
-                        productPrice: item[0].mrp,
-                      },
-                    ),
+                    orderSummary: JSON.stringify([{
+                      userId: user,
+                      productId: item._id,
+                      productBrand: item.brand,
+                      productName: item.name,
+                      productPrice: item.discountedPrice,
+                      quantity:1
+                    }]),
                   },
                 }}
               >
               <BuyNowButton />
               </Link>
 
-              <AddToCartButton product={item[0]} />
+              <AddToCartButton product={item} />
             </div>
           </div>
         </div>
@@ -105,7 +106,7 @@ const ProductPage = ({ item }) => {
         <div className="m-4">
           <h1 className="text-3xl font-medium">Features</h1>
           <ol className=" list-disc p-4">
-            {item[0].features.map((feature, index) => (
+            {item.features.map((feature, index) => (
               <li key={index} className="text-lg">
                 {feature}
               </li>
@@ -120,11 +121,11 @@ const ProductPage = ({ item }) => {
           <div className="overflow-x-auto py-2">
             <table className="w-full bg-black text-white rounded-2xl">
               <tbody className="">
-                {Object.keys(item[0].specifications).map((key) => (
+                {Object.keys(item.specifications).map((key) => (
                   <tr key={key}>
                     <td className="py-4 px-4 font-medium">{key}</td>
                     <td className="py-4 px-4 font-light">
-                      {item[0].specifications[key]}
+                      {item.specifications[key]}
                     </td>
                   </tr>
                 ))}

@@ -227,7 +227,15 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     <h1 className="font-medium text-sm lg:text-lg ">
                       {monitor.brand}
                     </h1>
-                    <Link href={`/products/monitors/${monitor.name}`}>
+                    <Link href={{
+                      pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
+                      query: {
+                        productDetails: JSON.stringify(
+                          monitor
+                        ),
+                        userId:userId
+                      },
+                    }}>
                       <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-2xl lg:max-w-full">
                         {monitor.name}
                       </h1>
