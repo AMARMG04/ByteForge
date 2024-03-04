@@ -85,7 +85,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" max-w-screen-2xl bg-gradient-to-r from-blue-800 to-indigo-900 h-32 lg:h-[100px] xl:max-w-full">
+    <div className=" max-w-screen-2xl bg-black h-32 lg:h-[100px] xl:max-w-full">
       <div className="w-full flex flex-col gap-4 mx-auto">
         <div className="flex flex-row justify-between mt-6 mx-2 z-10 lg:items-center lg:mt-10 lg:justify-between">
           {navState ? (

@@ -6,10 +6,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const slides = [
-  "/assets/Laptop.jpg",
+  "/assets/Laptop.png",
   "/assets/CPU.jpg",
   "/assets/CPU2.jpg",
-  "/assets/Board.jpg",
 ];
 
 const Carousel = () => {
