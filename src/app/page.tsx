@@ -30,7 +30,7 @@ export default async function Home() {
         <FrequentlyBought mostFB={mostFB} />
       </section>
 
-      <section className='bg-black flex flex-col text-white p-4 gap-8'>
+      <section className='bg-gradient-to-r from-blue-800 to-indigo-900 flex flex-col text-white p-4 gap-8'>
         <div className='flex flex-col gap-10 lg:flex-row lg:justify-between'>
           <div className='mt-4'>
             <Link href='/'>
