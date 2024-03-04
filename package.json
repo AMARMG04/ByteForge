@@ -12,6 +12,7 @@
     "firebase": "^10.7.1",
     "mongodb": "^6.3.0",
     "next": "^14.0.4",
+    "razorpay": "^2.9.2",
     "react": "^18",
     "react-dom": "^18",
     "react-firebase-hooks": "^5.1.1"

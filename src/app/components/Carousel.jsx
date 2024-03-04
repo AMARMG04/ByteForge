@@ -29,7 +29,7 @@ const Carousel = () => {
               src={slides[current]}
               width={1000}
               height={500}
-              alt="Logo"
+              alt="Slides"
               className='object-cover rounded-[10px] ease-in lg:w-[3000px]'
             />
 
@@ -40,7 +40,7 @@ const Carousel = () => {
             src="/assets/arrow.svg"
             width={40}
             height={40}
-            alt="Logo"
+            alt="arrow left"
             className="rotate-180 shadow-xl rounded-full"
           />
           </button>
@@ -49,7 +49,7 @@ const Carousel = () => {
             src="/assets/arrow.svg"
             width={40}
             height={40}
-            alt="Logo"
+            alt="arrow right"
             className="shadow-xl rounded-full"
           />
           </button>

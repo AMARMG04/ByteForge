@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, {useState} from "react";
 import Navbar from "./Navbar";
 import Link from "next/link";
 import Image from "next/image";
@@ -9,9 +10,9 @@ const AddToCart = ({ data }) => {
   const cartItems = data.cart_items;
   const userId = data.cart_items[0].userId;
   
-  const router = useRouter();
+  // const router = useRouter();
   
-  const [localCartItems, setLocalCartItems] = React.useState(cartItems);
+  const [localCartItems, setLocalCartItems] = useState(cartItems);
 
 
   const updateQuantity = async (productId, newQuantity) => {

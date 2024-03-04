@@ -18,11 +18,24 @@ const Navbar = () => {
   };
 
   const [loggedIn, setLoggedIn] = useState(false);
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setLoggedIn(true);
-    }
-  });
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     setLoggedIn(true);
+  //   }
+  // });
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    });
+
+    // Cleanup function to unsubscribe from onAuthStateChanged
+    return () => unsubscribe();
+  }, [auth]);
 
   const handleLogout = async () => {
     try {
@@ -80,7 +93,7 @@ const Navbar = () => {
               src="/assets/close.png"
               width={30}
               height={30}
-              alt="Menu"
+              alt="close"
               onClick={handleNav}
               className=" w-[24px] h-[24px] lg:hidden"
             />
