@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
 import { app } from "../firebase/config";
+import { toast } from 'react-toastify';
 
 
 const addToCart = async (productId, productBrand, productName, productPrice, productImage, userId) => {
@@ -21,7 +22,28 @@ const addToCart = async (productId, productBrand, productName, productPrice, pro
 
   const result = await res.json();
   if(result.status === 200) {
+    toast.success('Product added to the cart', {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
     return result.message;
+  }else if(result.status === 400) {
+    toast('Product already in the cart', {
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      });
   }
 
   return result.error;

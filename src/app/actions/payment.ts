@@ -1,6 +1,5 @@
 "use server"
 
-
 export const paymentUsingRazorpay = async(amount: any) => {
   const response = await fetch("http://localhost:3000/api/checkout", {
     method: "POST",

@@ -1,14 +1,26 @@
 "use client"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Navbar from "./Navbar";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { toast } from 'react-toastify';
 
 const AddToCart = ({ data }) => {
-  const cartEmpty = false;
+  const [cartEmpty, setCartEmpty] = useState(false);
+
   const cartItems = data.cart_items;
-  const userId = data.cart_items[0].userId;
+  console.log(data)
+
+  useEffect(() => {
+    if(data.cart_items.length === 0){
+      setCartEmpty(true)
+    }
+  }, [])
+
+  const userId = data.cart_items.userId;
+  
+  
   
   // const router = useRouter();
   
@@ -54,7 +66,16 @@ const AddToCart = ({ data }) => {
       console.log(response);
 
       if (response.status === 200) {
-        // Optimistic Rendering: Update local state immediately
+        toast.success('Product removed from the cart', {
+          position: "bottom-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+          });
         const updatedCartItems = localCartItems.filter(
           (item) => item._id !== productId
         );
@@ -160,7 +181,7 @@ const AddToCart = ({ data }) => {
                     href={{
                       pathname: "/checkout", // Your checkout page path
                       query: {
-                        userId: localCartItems[0].userId,
+                        userId: localCartItems[0]?.userId || userId,
                         orderSummary: JSON.stringify(localCartItems),
                         total: calculateTotal(),
                       },

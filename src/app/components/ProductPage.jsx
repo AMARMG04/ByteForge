@@ -5,6 +5,7 @@ import AddToCartButton from "../components/AddToCartButton";
 import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
 
+
 const ProductPage = ({ item, user }) => {
   const slides = item.images;
 

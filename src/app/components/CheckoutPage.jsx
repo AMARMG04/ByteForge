@@ -82,12 +82,12 @@ const CheckoutPage = ({ localCartItems, user }) => {
   const handleSubmit = async () => {
     try {
       await loadRazorpayScript();
-      const payment = await paymentUsingRazorpay(amount);
+      const payment = await paymentUsingRazorpay(1000);
       console.log(payment.id);
 
       const options = {
         key: process.env.RAZORPAY_KEY,
-        amount: amount,
+        amount: 1000,
         currency: "INR",
         name: "Kalvi Computers",
         description: "Purchase of Laptop",
@@ -95,6 +95,7 @@ const CheckoutPage = ({ localCartItems, user }) => {
         image: "Your Business Logo",
         handler: function (response) {
           alert("Payment Successful");
+          
         },
         prefill: {
           name: user.firstName,
@@ -215,7 +216,7 @@ const CheckoutPage = ({ localCartItems, user }) => {
               />
               <div>
                 <span className="text-gray-400">Deliver to</span>
-                <span className="ml-2">ABC Street, XYZ City.</span>
+                <span className="ml-2">{user.city}</span>
               </div>
             </div>
           </div>
@@ -226,7 +227,7 @@ const CheckoutPage = ({ localCartItems, user }) => {
           <div className="m-4">
             <UserDetailsForm user={user} />
           </div>
-          <h1 className="text-2xl font-semibold">2. Payment Details</h1>
+
         </div>
       </div>
     </>
