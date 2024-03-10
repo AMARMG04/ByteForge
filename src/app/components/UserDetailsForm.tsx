@@ -9,15 +9,15 @@ const UserDetailsForm = ({ user }: any) => {
     const uid = searchParams.get('userId')
 
     const [formValues, setFormValues] = useState({
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        email: user.email || '',
-        mobile: user.mobile || '',
-        street: user.street || '',
-        city: user.city || '',
-        district: user.district || '',
-        state: user.state || '',
-        pincode: user.pincode || '',
+        firstName: user?.firstName || '',
+        lastName: user?.lastName || '',
+        email: user?.email || '',
+        mobile: user?.mobile || '',
+        street: user?.street || '',
+        city: user?.city || '',
+        district: user?.district || '',
+        state: user?.state || '',
+        pincode: user?.pincode || '',
     });
 
     // const [formValues, setFormValues] = useState({

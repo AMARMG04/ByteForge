@@ -3,6 +3,7 @@ import UserDetailsForm from "../components/UserDetailsForm";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import { paymentUsingRazorpay } from "@/app/actions/payment";
+import { toast } from 'react-toastify';
 
 const CheckoutPage = ({ localCartItems, user }) => {
   // const [start, setStart] = useState(false)
@@ -95,8 +96,18 @@ const CheckoutPage = ({ localCartItems, user }) => {
         image: "Your Business Logo",
         handler: function (response) {
           alert("Payment Successful");
+          console.log("Payment Successful")
           
         },
+        // handler: function (response) {
+        //   if (response.razorpay_payment_id) {
+        //     // Payment successful, handle it accordingly
+        //     toast.success("Payment Successful");
+        //   } else {
+        //     // Payment failed or was canceled
+        //     toast.error("Payment Failed");
+        //   }
+        // },
         prefill: {
           name: user.firstName,
           email: user.email,

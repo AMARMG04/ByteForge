@@ -2,10 +2,13 @@ import type { Metadata } from 'next'
 import { Inter_Tight } from 'next/font/google'
 import './globals.css'
 import { ToastContainer } from './toast';
+// import Toast from './toast';
+
+
 
 
 const inter = Inter_Tight({
-  subsets: ['latin'], 
+  subsets: ['latin'],
   variable: "--font-inter",
 });
 
@@ -21,8 +24,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white mx-auto h-screen sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-full`}>{children}</body>
+
+      <body className={`${inter.className} bg-white mx-auto h-screen sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg xl:max-w-full`}>
+          {children}
       <ToastContainer />
+      </body>
+
+
+
     </html>
   )
 }
