@@ -6,7 +6,6 @@ import { paymentUsingRazorpay } from "@/app/actions/payment";
 import { toast } from 'react-toastify';
 
 const CheckoutPage = ({ localCartItems, user }) => {
-  // const [start, setStart] = useState(false)
 
   const calculateTotal = () => {
     return localCartItems.reduce((total, item) => {
@@ -15,59 +14,7 @@ const CheckoutPage = ({ localCartItems, user }) => {
   };
   const amount = calculateTotal();
 
-  // useEffect(() => {
-  //     const loadRazorpayScript = async () => {
-  //         try{
-  //             const script = document.createElement("script");
-  //             script.src = "https://checkout.razorpay.com/v1/checkout.js";
-  //             script.async = true;
-  //             document.body.appendChild(script);
-  //         }catch(e){
-  //             console.error("Failed to load Razorpay Script ", e)
-  //         }
-  //     }
 
-  //     const handlePayment = async () => {
-
-  //         try{
-  //             await loadRazorpayScript();
-  //             const payment = await paymentUsingRazorpay(amount);
-  //             console.log(payment.id)
-
-  //             const options = {
-  //                 key: process.env.RAZORPAY_KEY,
-  //                 amount: amount,
-  //                 currency: "INR",
-  //                 name: "Kalvi Computers",
-  //                 description: "Purchase of Laptop",
-  //                 order_id: payment.id,
-  //                 image: "Your Business Logo",
-  //                 handler: function (response) {
-  //                     alert("Payment Successful");
-  //                 },
-  //                 prefill:{
-  //                     name: user.firstName,
-  //                     email: user.email,
-  //                     contact: user.mobile
-  //                 }
-  //             };
-
-  //             const razorpayInstance = new window.Razorpay(options);
-  //             razorpayInstance.open();
-
-  //         }catch(error){
-  //             console.error("Failed to handle payment", error);
-  //             alert("Payment Initialization Failed");
-  //         }
-  //     };
-
-  //     handlePayment();
-
-  // }, [start]);
-
-  // const handleSubmit = () =>{
-  //     setStart(true)
-  // }
 
   const loadRazorpayScript = async () => {
     try {

@@ -127,6 +127,30 @@ const Navbar = () => {
                 ))}
               </ul>
             </div>
+
+            <div className="relative items-center mx-2 hidden lg:flex">
+          <Image
+            src="/assets/search.png"
+            width={28}
+            height={28}
+            alt="Menu"
+            className="absolute ml-4"
+          />
+
+          <input
+            type="text"
+            className="lg:w-[200px] xl:w-[400px] h-11 pl-14 placeholder-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Search for monitors, processors etc.."
+            onFocus={handleInputFocus}
+            onBlur={handleInputBlur}
+          />
+          {/* {isInputFocused && (
+            <div
+              className="z-10 fixed top-[120px] left-0 right-0 bottom-0 bg-white"
+              onClick={handleInputBlur}
+            ></div>
+          )} */}
+        </div>
           </div>
 
           <div
@@ -250,7 +274,7 @@ const Navbar = () => {
 
           <input
             type="text"
-            className="w-full h-10 pl-14 placeholder-gray-600"
+            className="w-full h-11 pl-14 placeholder-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             placeholder="Search for monitors, processors etc.."
             onFocus={handleInputFocus}
             onBlur={handleInputBlur}

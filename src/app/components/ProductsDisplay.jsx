@@ -211,7 +211,15 @@ const ProductsDisplay = ({ monitors, filters }) => {
                 className="flex flex-row gap-4 shadow-2xl rounded-[10px] lg:gap-10 max-h-[400px]"
               >
                 <div className="relative w-1/2 lg:w-2/5" style={{position: "relative"}}>
-                  <Link href={`/products/monitors/${monitor.name}`}>
+                <Link href={{
+                      pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
+                      query: {
+                        productDetails: JSON.stringify(
+                          monitor
+                        ),
+                        userId:userId
+                      },
+                    }}>
                     <Image
                       src={monitor.images[0]}
                       sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"

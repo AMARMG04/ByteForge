@@ -56,13 +56,13 @@ const ProductPage = ({ item, user }) => {
             </p> */}
 
 
-            {
+            {/* {
               item.configuration_available === "yes" ? <div>
               <p className="text-xl font-medium mt-5">Select Variant</p>
               <ConfigurationSelector config={item} />
               </div>:""
 
-            }
+            } */}
 
 
 
