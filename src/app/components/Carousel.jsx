@@ -23,11 +23,11 @@ const Carousel = () => {
   return (
     <>
       <div className="overflow-hidden relative">
-        <div className="flex max-h-96 md:w-full lg:max-h-[600px]">
+        <div className="flex min-h-96 max-h-96 md:w-full lg:max-h-[600px]">
             <Image
               src={slides[current]}
-              width={1000}
-              height={500}
+              width={3000}
+              height={1000}
               alt="Slides"
               className='object-cover rounded-[10px] ease-in lg:w-[3000px]'
             />

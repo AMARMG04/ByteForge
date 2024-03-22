@@ -5,7 +5,6 @@ import AddToCartButton from "../components/AddToCartButton";
 import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
 
-
 const ProductPage = ({ item, user }) => {
   const slides = item.images;
 
@@ -15,7 +14,6 @@ const ProductPage = ({ item, user }) => {
       currency: "INR",
       minimumFractionDigits: 2,
     });
-
 
     // Extracting parts from formatted string
     const parts = currencyFormatter.formatToParts(amount);
@@ -37,7 +35,6 @@ const ProductPage = ({ item, user }) => {
   return (
     <div>
       <div>
-       
         <div className="flex flex-col gap-6 p-4 lg:flex-row lg:gap-4">
           <DisplayImage slides={slides} />
 
@@ -55,7 +52,6 @@ const ProductPage = ({ item, user }) => {
               </span>
             </p> */}
 
-
             {/* {
               item.configuration_available === "yes" ? <div>
               <p className="text-xl font-medium mt-5">Select Variant</p>
@@ -64,39 +60,54 @@ const ProductPage = ({ item, user }) => {
 
             } */}
 
-
-
             <hr />
 
             <div className="flex flex-col gap-2">
-              {(item.quantity === 0) ? <p className="text-red-400 lg:text-xl font-medium">Out of Stock</p> : (item.quantity >= 5) ? <p className="text-green-500 font-medium text-xl">In Stock</p> : <p className="text-red-500 font-medium text-xl">Only {item.quantity} left in stock, hurry up!</p>}
+              {item.quantity === 0 ? (
+                <p className="text-red-400 lg:text-xl font-medium">
+                  Out of Stock
+                </p>
+              ) : item.quantity >= 5 ? (
+                <p className="text-green-500 font-medium text-xl">In Stock</p>
+              ) : (
+                <p className="text-red-500 font-medium text-xl">
+                  Only {item.quantity} left in stock, hurry up!
+                </p>
+              )}
               <div>
-              <p className="text-red-400 lg:text-2xl">
-                -{item.discount_percentage}%
-              </p>
-              <p className="text-3xl lg:text-4xl">{formatCurrency(item.discountedPrice)}</p>
-              <p className="line-through lg:text-xl">{formatCurrency(item.mrp)}</p>
+                <p className="text-red-400 lg:text-2xl">
+                  -{item.discount_percentage}%
+                </p>
+                <p className="text-3xl lg:text-4xl">
+                  {formatCurrency(item.discountedPrice)}
+                </p>
+                <p className="line-through lg:text-xl">
+                  {formatCurrency(item.mrp)}
+                </p>
               </div>
             </div>
 
             <div className="flex flex-col gap-5 justify-start items-start">
-              <Link className="flex flex-row justify-center items-center w-full xl:max-w-md"
+              <Link
+                className="w-full"
                 href={{
                   pathname: "/checkout",
                   query: {
-                    orderSummary: JSON.stringify([{
-                      userId: user,
-                      productId: item._id,
-                      productBrand: item.brand,
-                      productName: item.name,
-                      productImage: item.images[0],
-                      productPrice: item.discountedPrice,
-                      quantity:1
-                    }]),
+                    orderSummary: JSON.stringify([
+                      {
+                        userId: user,
+                        productId: item._id,
+                        productBrand: item.brand,
+                        productName: item.name,
+                        productImage: item.images[0],
+                        productPrice: item.discountedPrice,
+                        quantity: 1,
+                      },
+                    ]),
                   },
                 }}
               >
-              <BuyNowButton />
+                <BuyNowButton />
               </Link>
 
               <AddToCartButton product={item} />

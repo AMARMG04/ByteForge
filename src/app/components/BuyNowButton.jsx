@@ -10,7 +10,7 @@ const BuyNowButton = () => {
 
   return (
     <button
-      className=" flex flex-row justify-center items-center py-3 w-full lg:py-5 xl:max-w-md bg-indigo-200 rounded-md"
+      className=" flex flex-row justify-center items-center py-3 w-full lg:py-5 xl:max-w-sm bg-indigo-200 rounded-full hover:scale-105 duration-200"
     //   onClick={handleButtonClick}
     >
       <Image

@@ -6,10 +6,12 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../firebase/config";
+import { usePathname } from 'next/navigation'
 
 const Navbar = () => {
   const auth = getAuth(app);
   const router = useRouter();
+  const pathname = usePathname()
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -112,7 +114,7 @@ const Navbar = () => {
                 {menuLinks.map((link, index) => (
                   <li
                     key={index}
-                    className="text-white font-medium hover:text-gray-500"
+                    className={`text-white font-medium hover:text-gray-500 hover:scale-110 duration-150 ${pathname === link.url ? 'underline underline-offset-4' : ''}`}
                   >
                     <Link href={link.url}>{link.text}</Link>
                   </li>
@@ -166,7 +168,7 @@ const Navbar = () => {
                   <Link href={link.url} key={index}>
                     <li
                       key={index}
-                      className="text-white px-20 py-6 text-2xl shadow-sm shadow-violet-800 my-8 rounded-md md:px-44 md:py-20"
+                      className="text-white px-20 py-6 text-2xl shadow-sm shadow-indigo-600 my-8 rounded-md md:px-44 md:py-20"
                     >
                       {link.text}
                     </li>
@@ -201,7 +203,7 @@ const Navbar = () => {
                   className={
                     showMenu
                       ? "absolute bottom-0 right-0 top-0 z-10 h-[100%] flex flex-col gap-4 text-white backdrop-blur-2xl bg-black/40 w-[300px] pr-4 pt-10 ease-in duration-200"
-                      : "absolute bottom-0 right-[-100%] top-0 z-10 h-screen flex flex-col gap-4 text-white backdrop-blur-2xl bg-black/40 w-[300px] pr-4 pt-10 ease-in duration-200"
+                      : "absolute bottom-0 right-0 hidden top-0 z-10 h-screen flex-col gap-4 text-white backdrop-blur-2xl bg-black/40 w-[300px] pr-4 pt-10 ease-in duration-200"
                   }
                 >
                   <div className="flex flex-row items-end justify-end">

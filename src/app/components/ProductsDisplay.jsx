@@ -27,7 +27,6 @@ const ProductsDisplay = ({ monitors, filters }) => {
     };
   }, []);
 
-  
   const [showFilters, setShowFilters] = useState(false);
 
   const [selectedFilters, setSelectedFilters] = useState({});
@@ -201,49 +200,52 @@ const ProductsDisplay = ({ monitors, filters }) => {
               )}
             </div>
           </div>
-          <div className="flex flex-col gap-10  my-10 lg:w-full">
+          <div className="flex flex-col gap-10 my-10 lg:w-full">
             <h1 className="text-2xl font-semibold">
               Products({filteredMonitors.length})
             </h1>
             {filteredMonitors.map((monitor, index) => (
               <div
                 key={index}
-                className="flex flex-row gap-4 shadow-2xl rounded-[10px] lg:gap-10 max-h-[400px]"
+                className="flex flex-row gap-4 shadow-[0_5px_60px_-15px_rgba(0,0,0,0.3)] rounded-[10px] lg:gap-10 max-h-[400px] lg:max-w-[1100px]"
               >
-                <div className="relative w-1/2 lg:w-2/5" style={{position: "relative"}}>
-                <Link href={{
+                <div
+                  className="relative basis-1/3"
+                  style={{ position: "relative" }}
+                >
+                  <Link
+                    href={{
                       pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
                       query: {
-                        productDetails: JSON.stringify(
-                          monitor
-                        ),
-                        userId:userId
+                        productDetails: JSON.stringify(monitor),
+                        userId: userId,
                       },
-                    }}>
+                    }}
+                  >
                     <Image
                       src={monitor.images[0]}
                       sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
                       fill
                       alt="Product Image"
-                      className="rounded-l-[10px] border-r-2 border-gray-300 object-scale-down md:w-2/5 lg:w-[400px]"
+                      className="rounded-l-[10px] border-r-2 border-gray-300 object-contain p-4 md:p-10"
                     />
                   </Link>
                 </div>
 
-                <div className="flex flex-col gap-4 my-4 lg:w-4/6">
+                <div className="flex flex-col gap-2 my-4 basis-2/3 pr-4 pb-2">
                   <div className="">
                     <h1 className="font-medium text-sm lg:text-lg ">
                       {monitor.brand}
                     </h1>
-                    <Link href={{
-                      pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
-                      query: {
-                        productDetails: JSON.stringify(
-                          monitor
-                        ),
-                        userId:userId
-                      },
-                    }}>
+                    <Link
+                      href={{
+                        pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
+                        query: {
+                          productDetails: JSON.stringify(monitor),
+                          userId: userId,
+                        },
+                      }}
+                    >
                       <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-2xl lg:max-w-full">
                         {monitor.name}
                       </h1>
@@ -253,30 +255,34 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     <p className="text-red-400 lg:text-2xl">
                       -{monitor.discount_percentage}%
                     </p>
-                    <p className="text-2xl font-medium lg:text-4xl">{formatCurrency(monitor.discountedPrice)}</p>
+                    <p className="text-2xl font-medium lg:text-4xl">
+                      {formatCurrency(monitor.discountedPrice)}
+                    </p>
                     <p className="line-through font-medium lg:text-xl">
-                        {formatCurrency(monitor.mrp)}/-
+                      {formatCurrency(monitor.mrp)}/-
                     </p>
                   </div>
-                  <div className="w-full flex flex-col gap-5">
-                    
-                    <Link href={{
-                      pathname: "/checkout", // Your checkout page path
-                      query: {
-                        orderSummary: JSON.stringify([{
-                          userId: userId,
-                          productId: monitor._id,
-                          productBrand: monitor.brand,
-                          productName: monitor.name,
-                          productPrice: monitor.discountedPrice,
-                          quantity:1
-                        }]),
-                      },
-                    }}
+                  <div className="w-full flex flex-col gap-3">
+                    <Link
+                      href={{
+                        pathname: "/checkout", // Your checkout page path
+                        query: {
+                          orderSummary: JSON.stringify([
+                            {
+                              userId: userId,
+                              productId: monitor._id,
+                              productBrand: monitor.brand,
+                              productName: monitor.name,
+                              productPrice: monitor.discountedPrice,
+                              quantity: 1,
+                            },
+                          ]),
+                        },
+                      }}
                     >
-                    <BuyNowButton />
+                      <BuyNowButton />
                     </Link>
-                    
+
                     <AddToCartButton product={monitor} />
                   </div>
                 </div>

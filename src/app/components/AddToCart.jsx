@@ -1,31 +1,27 @@
-"use client"
-import React, {useEffect, useState} from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 const AddToCart = ({ data }) => {
   const [cartEmpty, setCartEmpty] = useState(false);
 
   const cartItems = data.cart_items;
-  console.log(data)
 
   useEffect(() => {
-    if(data.cart_items.length === 0){
-      setCartEmpty(true)
+    if (data.cart_items.length === 0) {
+      setCartEmpty(true);
     }
-  }, [])
+  }, []);
 
   const userId = data.cart_items.userId;
-  
-  
-  
-  // const router = useRouter();
-  
-  const [localCartItems, setLocalCartItems] = useState(cartItems);
 
+  // const router = useRouter();
+
+  const [localCartItems, setLocalCartItems] = useState(cartItems);
 
   const updateQuantity = async (productId, newQuantity) => {
     try {
@@ -66,7 +62,7 @@ const AddToCart = ({ data }) => {
       console.log(response);
 
       if (response.status === 200) {
-        toast.success('Product removed from the cart', {
+        toast.success("Product removed from the cart", {
           position: "bottom-right",
           autoClose: 4000,
           hideProgressBar: false,
@@ -75,7 +71,7 @@ const AddToCart = ({ data }) => {
           draggable: true,
           progress: undefined,
           theme: "dark",
-          });
+        });
         const updatedCartItems = localCartItems.filter(
           (item) => item._id !== productId
         );
@@ -187,7 +183,7 @@ const AddToCart = ({ data }) => {
                       },
                     }}
                   >
-                    <button className=" bg-indigo-500 text-white px-20 py-4 rounded text-lg font-medium">
+                    <button className=" bg-indigo-500 text-white px-20 py-4 rounded text-lg font-medium hover:scale-105 transition duration-200">
                       Place Order
                     </button>
                   </Link>
@@ -246,13 +242,15 @@ const AddToCart = ({ data }) => {
                           width={200}
                           height={200}
                           alt="Logo"
-                          className="w-[100px] h-[100px] object-scale-down md:w-[200px] md:h-[200px] rounded"
+                          className="object-scale-down p-10 rounded"
                         />
                         <div className="flex flex-col w-full gap-4">
-                          <p>{item.productBrand}</p>
-                          <span className="max-w-[250px] font-medium md:max-w-[500px]">
-                            {item.productName}
-                          </span>
+                          <div>
+                            <p>{item.productBrand}</p>
+                            <span className="max-w-[250px] font-medium md:max-w-[500px]">
+                              {item.productName}
+                            </span>
+                          </div>
                           <p className="text-2xl font-medium">
                             {formatCurrency(item.productPrice)}
                           </p>
@@ -290,10 +288,10 @@ const AddToCart = ({ data }) => {
                           </div>
 
                           <button
-                            className="bg-black flex justify-center p-3 rounded md:max-w-[300px]"
+                            className="bg-black flex justify-center py-3 rounded-full hover:scale-105 transition duration-200 md:max-w-[300px]"
                             onClick={() => deleteQuantity(item._id)}
                           >
-                            <div className="flex flex-row gap-2 items-center">
+                            <div className="flex flex-row gap-2 items-center ">
                               <Image
                                 src={"/assets/trash.png"}
                                 width={30}
