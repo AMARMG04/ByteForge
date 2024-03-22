@@ -87,7 +87,7 @@ const Navbar = () => {
   return (
     <div className=" max-w-screen-2xl bg-black h-32 lg:h-[100px] xl:max-w-full">
       <div className="w-full flex flex-col gap-4 mx-auto">
-        <div className="flex flex-row justify-between mt-6 mx-2 z-10 lg:items-center lg:mt-10 lg:justify-between">
+        <div className="flex flex-row justify-between mt-6 mx-2 z-10 lg:items-center lg:mt-8 lg:justify-between">
           {navState ? (
             <Image
               src="/assets/close.png"
@@ -192,7 +192,7 @@ const Navbar = () => {
                     width={30}
                     height={30}
                     alt="profile"
-                    className="ml-2 w-[24px] h-[24px]"
+                    className="ml-2 w-[24px] h-[24px] hover:cursor-pointer"
                     onClick={handleProfileClick}
                   />
                   {showMenu ? (

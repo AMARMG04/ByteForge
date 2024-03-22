@@ -89,6 +89,7 @@ const ProductPage = ({ item, user }) => {
                       productId: item._id,
                       productBrand: item.brand,
                       productName: item.name,
+                      productImage: item.images[0],
                       productPrice: item.discountedPrice,
                       quantity:1
                     }]),

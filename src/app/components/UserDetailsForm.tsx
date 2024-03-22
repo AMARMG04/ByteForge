@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { personalDetails } from '@/app/actions/personalDetails'
+import { toast } from 'react-toastify'
 
 const UserDetailsForm = ({ user }: any) => {
     const searchParams = useSearchParams()
@@ -39,7 +40,19 @@ const UserDetailsForm = ({ user }: any) => {
 
     return (
         <form action={async (formData) => {
-            await personalDetails(formData, uid)
+            const data = await personalDetails(formData, uid)
+            if(data.status === 200 || data.status === 409){
+                toast.success('Updated Successfully',{
+                    position: "bottom-right",
+                    autoClose: 4000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                  })
+            }
         }}>
             <div className='m-2 flex flex-col gap-4'>
                 <div className='flex flex-col gap-4 lg:flex-row lg:gap-40'>

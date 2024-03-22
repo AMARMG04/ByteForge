@@ -3,9 +3,12 @@ import UserDetailsForm from "../components/UserDetailsForm";
 import Navbar from "../components/Navbar";
 import Image from "next/image";
 import { paymentUsingRazorpay } from "@/app/actions/payment";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import { orderDetailsUpdation } from "../actions/orderDetailsUpdation";
 
 const CheckoutPage = ({ localCartItems, user }) => {
+  const router = useRouter();
 
   const calculateTotal = () => {
     return localCartItems.reduce((total, item) => {
@@ -13,8 +16,6 @@ const CheckoutPage = ({ localCartItems, user }) => {
     }, 0);
   };
   const amount = calculateTotal();
-
-
 
   const loadRazorpayScript = async () => {
     try {
@@ -41,20 +42,46 @@ const CheckoutPage = ({ localCartItems, user }) => {
         description: "Purchase of Laptop",
         order_id: payment.id,
         image: "Your Business Logo",
-        handler: function (response) {
-          alert("Payment Successful");
-          console.log("Payment Successful")
-          
-        },
         // handler: function (response) {
-        //   if (response.razorpay_payment_id) {
-        //     // Payment successful, handle it accordingly
-        //     toast.success("Payment Successful");
-        //   } else {
-        //     // Payment failed or was canceled
-        //     toast.error("Payment Failed");
-        //   }
+        //   alert("Payment Successful");
+        //   console.log("Payment Successful")
+        //   console.log(response)
+
         // },
+        handler: async function (response) {
+          try {
+            if (response.razorpay_payment_id) {
+              // Payment successful, handle it accordingly
+              toast.success("Payment Successful", {
+                position: "bottom-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+
+              await orderDetailsUpdation(response, localCartItems, user);
+              router.push("/ordered");
+            } else {
+              // Payment failed or was canceled
+              toast.error("Payment Failed", {
+                position: "bottom-right",
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+              });
+            }
+          } catch (error) {
+            console.error("Error while redirecting:", error);
+          }
+        },
         prefill: {
           name: user.firstName,
           email: user.email,
@@ -185,7 +212,6 @@ const CheckoutPage = ({ localCartItems, user }) => {
           <div className="m-4">
             <UserDetailsForm user={user} />
           </div>
-
         </div>
       </div>
     </>
