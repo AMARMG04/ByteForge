@@ -31,12 +31,12 @@ const CheckoutPage = ({ localCartItems, user }) => {
   const handleSubmit = async () => {
     try {
       await loadRazorpayScript();
-      const payment = await paymentUsingRazorpay(1000);
+      const payment = await paymentUsingRazorpay(amount);
       console.log(payment.id);
 
       const options = {
         key: process.env.RAZORPAY_KEY,
-        amount: 1000,
+        amount: amount,
         currency: "INR",
         name: "Kalvi Computers",
         description: "Purchase of Laptop",
