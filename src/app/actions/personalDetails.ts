@@ -9,7 +9,7 @@ export const personalDetails = async(formdata: FormData, userId: string|null) =>
     
     const firstName = formdata.get("firstName")
     const lastName = formdata.get("lastName")
-    const mailid = formdata.get("mailid")
+    const mailid = formdata.get("email")
     const mobile = formdata.get("mobile")
     const street = formdata.get("street")
     const city = formdata.get("city")

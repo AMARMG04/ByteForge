@@ -68,7 +68,7 @@ const UserDetailsForm = ({ user }: any) => {
                 <div className='flex flex-col gap-4 lg:flex-row lg:gap-40'>
                     <div>
                         <label htmlFor="mailid" className='block font-medium'>Email ID</label>
-                        <input type="email" name="mailid" id="mailid" placeholder="Enter your email ID" value={formValues.email} onChange={handleInputChange} required className='w-full p-2 border-2 border-gray-500 rounded-sm lg:w-[400px]' />
+                        <input type="email" name="email" id="email" placeholder="Enter your email ID" value={formValues.email} onChange={handleInputChange} required className='w-full p-2 border-2 border-gray-500 rounded-sm lg:w-[400px]' />
                     </div>
                     <div>
                         <label htmlFor="mobile" className='block font-medium'>Mobile Number</label>
