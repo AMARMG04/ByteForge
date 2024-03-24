@@ -6,12 +6,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../firebase/config";
-import { usePathname } from 'next/navigation'
+import { usePathname } from "next/navigation";
+import Search from "./Search";
 
 const Navbar = () => {
   const auth = getAuth(app);
   const router = useRouter();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const [showMenu, setShowMenu] = useState(false);
 
@@ -114,7 +115,11 @@ const Navbar = () => {
                 {menuLinks.map((link, index) => (
                   <li
                     key={index}
-                    className={`text-white font-medium hover:text-gray-500 hover:scale-110 duration-150 ${pathname === link.url ? 'underline underline-offset-4' : ''}`}
+                    className={`text-white font-medium hover:text-gray-500 hover:scale-110 duration-150 ${
+                      pathname === link.url
+                        ? "underline underline-offset-4"
+                        : ""
+                    }`}
                   >
                     <Link href={link.url}>{link.text}</Link>
                   </li>
@@ -123,35 +128,16 @@ const Navbar = () => {
             </div>
 
             <div className="relative items-center mx-2 hidden lg:flex">
-              <Image
-                src="/assets/search.png"
-                width={28}
-                height={28}
-                alt="Menu"
-                className="absolute ml-4"
-              />
-
-              <input
-                type="text"
-                className="lg:w-[200px] xl:w-[400px] h-11 pl-14 placeholder-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Search for monitors, processors etc.."
-                onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
-              />
-              {/* {isInputFocused && (
-            <div
-              className="z-10 fixed top-[120px] left-0 right-0 bottom-0 bg-white"
-              onClick={handleInputBlur}
-            ></div>
-          )} */}
+              
+              <Search />
             </div>
           </div>
 
           <div
             className={
               navState
-                ? "text-white z-10 absolute top-0 left-0 right-0 bottom-0 pt-8 w-full h-[100%] backdrop-blur-2xl bg-black/40 text-center ease-in duration-150"
-                : "text-white z-10 absolute top-0 left-[-100%] right-0 bottom-0 pt-8 w-full h-screen backdrop-blur-2xl bg-black/40 text-center ease-in duration-150"
+                ? "text-white z-10 absolute top-0 left-0 right-0 bottom-0 pt-8 w-full h-[100%] backdrop-blur-2xl bg-black/50 text-center ease-in duration-150"
+                : "text-white z-10 absolute top-0 left-[-100%] right-0 bottom-0 pt-8 w-full h-screen backdrop-blur-2xl bg-black/50 text-center ease-in duration-150"
             }
           >
             <Image
@@ -168,7 +154,7 @@ const Navbar = () => {
                   <Link href={link.url} key={index}>
                     <li
                       key={index}
-                      className="text-white px-20 py-6 text-2xl shadow-sm shadow-indigo-600 my-8 rounded-md md:px-44 md:py-20"
+                      className="text-white px-20 py-6 text-2xl border-b-2 border-white my-8 rounded-md md:px-44 md:py-20"
                     >
                       {link.text}
                     </li>
@@ -278,27 +264,7 @@ const Navbar = () => {
           </div>
         </div>
         <div className="relative flex items-center mx-2 lg:hidden">
-          <Image
-            src="/assets/search.png"
-            width={28}
-            height={28}
-            alt="Menu"
-            className="absolute ml-4"
-          />
-
-          <input
-            type="text"
-            className="w-full h-11 pl-14 placeholder-gray-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            placeholder="Search for monitors, processors etc.."
-            onFocus={handleInputFocus}
-            onBlur={handleInputBlur}
-          />
-          {isInputFocused && (
-            <div
-              className="z-10 fixed top-[120px] left-0 right-0 bottom-0 bg-white"
-              onClick={handleInputBlur}
-            ></div>
-          )}
+          <Search />
         </div>
       </div>
     </div>

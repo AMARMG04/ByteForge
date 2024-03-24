@@ -213,7 +213,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
                   className="relative basis-1/3"
                   style={{ position: "relative" }}
                 >
-                  <Link
+                  {/* <Link
                     href={{
                       pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
                       query: {
@@ -221,7 +221,8 @@ const ProductsDisplay = ({ monitors, filters }) => {
                         userId: userId,
                       },
                     }}
-                  >
+                  > */}
+                  <Link href={`/products/monitors/${monitor.name}`}>
                     <Image
                       src={monitor.images[0]}
                       sizes="(max-width: 600px) 100vw, (max-width: 1024px) 50vw, 400px"
@@ -237,7 +238,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
                     <h1 className="font-medium text-sm lg:text-lg ">
                       {monitor.brand}
                     </h1>
-                    <Link
+                    {/* <Link
                       href={{
                         pathname: `/products/monitors/${monitor.name}`, // Your checkout page path
                         query: {
@@ -245,7 +246,8 @@ const ProductsDisplay = ({ monitors, filters }) => {
                           userId: userId,
                         },
                       }}
-                    >
+                    > */}
+                    <Link href={`/products/monitors/${monitor.name}`}>
                       <h1 className="font-medium text-xl max-w-[200px] md:max-w-md lg:text-2xl lg:max-w-full">
                         {monitor.name}
                       </h1>

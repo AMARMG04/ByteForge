@@ -6,7 +6,7 @@ import BuyNowButton from "../components/BuyNowButton";
 import Link from "next/link";
 
 const ProductPage = ({ item, user }) => {
-  const slides = item.images;
+  const slides = item[0].images;
 
   const formatCurrency = (amount) => {
     const currencyFormatter = new Intl.NumberFormat("en-IN", {
@@ -41,9 +41,9 @@ const ProductPage = ({ item, user }) => {
           <hr />
 
           <div className="flex flex-col gap-2 w-full">
-            <h1 className="font-medium text-sm lg:text-lg">{item.brand}</h1>
+            <h1 className="font-medium text-sm lg:text-lg">{item[0].brand}</h1>
             <h1 className="font-medium text-xl max-w-full md:max-w-full lg:text-3xl lg:max-w-full">
-              {item.description}
+              {item[0].description}
             </h1>
             {/* <p className="mt-4">
               ✩✩✩✩✩ (0){" "}
@@ -63,26 +63,26 @@ const ProductPage = ({ item, user }) => {
             <hr />
 
             <div className="flex flex-col gap-2">
-              {item.quantity === 0 ? (
+              {item[0].quantity === 0 ? (
                 <p className="text-red-400 lg:text-xl font-medium">
                   Out of Stock
                 </p>
-              ) : item.quantity >= 5 ? (
+              ) : item[0].quantity >= 5 ? (
                 <p className="text-green-500 font-medium text-xl">In Stock</p>
               ) : (
                 <p className="text-red-500 font-medium text-xl">
-                  Only {item.quantity} left in stock, hurry up!
+                  Only {item[0].quantity} left in stock, hurry up!
                 </p>
               )}
               <div>
                 <p className="text-red-400 lg:text-2xl">
-                  -{item.discount_percentage}%
+                  -{item[0].discount_percentage}%
                 </p>
                 <p className="text-3xl lg:text-4xl">
-                  {formatCurrency(item.discountedPrice)}
+                  {formatCurrency(item[0].discountedPrice)}
                 </p>
                 <p className="line-through lg:text-xl">
-                  {formatCurrency(item.mrp)}
+                  {formatCurrency(item[0].mrp)}
                 </p>
               </div>
             </div>
@@ -96,11 +96,11 @@ const ProductPage = ({ item, user }) => {
                     orderSummary: JSON.stringify([
                       {
                         userId: user,
-                        productId: item._id,
-                        productBrand: item.brand,
-                        productName: item.name,
-                        productImage: item.images[0],
-                        productPrice: item.discountedPrice,
+                        productId: item[0]._id,
+                        productBrand: item[0].brand,
+                        productName: item[0].name,
+                        productImage: item[0].images[0],
+                        productPrice: item[0].discountedPrice,
                         quantity: 1,
                       },
                     ]),
@@ -110,7 +110,7 @@ const ProductPage = ({ item, user }) => {
                 <BuyNowButton />
               </Link>
 
-              <AddToCartButton product={item} />
+              <AddToCartButton product={item[0]} />
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@ const ProductPage = ({ item, user }) => {
         <div className="m-4">
           <h1 className="text-3xl font-medium">Features</h1>
           <ol className=" list-disc p-4">
-            {item.features.map((feature, index) => (
+            {item[0].features.map((feature, index) => (
               <li key={index} className="text-lg">
                 {feature}
               </li>
@@ -134,11 +134,11 @@ const ProductPage = ({ item, user }) => {
           <div className="overflow-x-auto py-2">
             <table className="w-full bg-black text-white rounded-2xl">
               <tbody className="">
-                {Object.keys(item.specifications).map((key) => (
+                {Object.keys(item[0].specifications).map((key) => (
                   <tr key={key}>
                     <td className="py-4 px-4 font-medium">{key}</td>
                     <td className="py-4 px-4 font-light">
-                      {item.specifications[key]}
+                      {item[0].specifications[key]}
                     </td>
                   </tr>
                 ))}
