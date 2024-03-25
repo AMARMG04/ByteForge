@@ -275,6 +275,7 @@ const ProductsDisplay = ({ monitors, filters }) => {
                               productId: monitor._id,
                               productBrand: monitor.brand,
                               productName: monitor.name,
+                              productImage: monitor.images[0],
                               productPrice: monitor.discountedPrice,
                               quantity: 1,
                             },

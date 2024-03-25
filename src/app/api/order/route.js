@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { connectToDatabase, disconnectFromDatabase } from "@/app/lib/database";
 
+
+
 export const POST = async (req, res) => {
   if (req.method === "POST") {
     try {
       const data = await req.json();
-      console.log(data)
+      // console.log(data)
       // Connect to MongoDB
       const client = await connectToDatabase();
       const db = client.db("byteforge");
@@ -32,6 +34,8 @@ export const POST = async (req, res) => {
           orderID:data.orderData.razorpay_order_id,
           orderDate:formattedDate,
       })
+
+     
 
 
       return NextResponse.json({status: 200,},{message: "Order Details Updated",});
