@@ -102,8 +102,8 @@ const Navbar = () => {
           <div className="flex flex-row items-center gap-20">
             <Link href="/">
               <Image
-                src="/assets/logo.svg"
-                width={200}
+                src="/assets/logo_main.svg"
+                width={250}
                 height={150}
                 alt="Logo"
                 className="ml-2"
