@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { app } from "../firebase/config";
 import { usePathname } from "next/navigation";
 import Search from "./Search";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const auth = getAuth(app);
@@ -28,14 +29,30 @@ const Navbar = () => {
   // });
 
   useEffect(() => {
+    const hasShownToast = localStorage.getItem('hasShownLoginToast');
+  
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
+        if (!hasShownToast) {
+          toast.success("Logged in successfully", {
+            position: "bottom-right",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          localStorage.setItem('hasShownLoginToast', 'true');
+        }
       } else {
         setLoggedIn(false);
+        localStorage.removeItem('hasShownLoginToast');
       }
     });
-
+  
     // Cleanup function to unsubscribe from onAuthStateChanged
     return () => unsubscribe();
   }, [auth]);
@@ -43,6 +60,16 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth);
+      toast.success("Logged out successfully", {
+        position: "bottom-right",
+        autoClose: 4000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       console.log("User signed out");
       setLoggedIn(false);
       router.push("/");
