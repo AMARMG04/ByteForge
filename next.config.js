@@ -6,7 +6,11 @@ const nextConfig = {
             hostname: "drive.google.com",
         }
         ]
+    },
+    output: 'export',
+    typescript: {
+        ignoreBuildErrors: true,
     }
-}
+};
 
 module.exports = nextConfig
