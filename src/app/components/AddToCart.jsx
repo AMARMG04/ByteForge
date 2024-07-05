@@ -19,11 +19,14 @@ const AddToCart = ({ data }) => {
 
   const userId = data.cart_items.userId;
 
-  // const router = useRouter();
-
   const [localCartItems, setLocalCartItems] = useState(cartItems);
 
   const updateQuantity = async (productId, newQuantity) => {
+    // Prevent quantity from going below 1
+    if (newQuantity < 1) {
+      return;
+    }
+
     try {
       const response = await fetch("/api/cart/updateQuantity", {
         method: "POST",
@@ -34,13 +37,14 @@ const AddToCart = ({ data }) => {
       });
 
       if (response.ok) {
-        // Optimistic Rendering: Update local state immediately
-        const updatedCartItems = cartItems.map((item) =>
-          item.productId === productId
-            ? { ...item, quantity: newQuantity }
-            : item
+        // Update only the specific item's quantity
+        setLocalCartItems(prevItems =>
+          prevItems.map(item =>
+            item.productId === productId
+              ? { ...item, quantity: newQuantity }
+              : item
+          )
         );
-        setLocalCartItems(updatedCartItems);
       } else {
         console.error("Failed to update quantity");
       }
@@ -91,10 +95,8 @@ const AddToCart = ({ data }) => {
       minimumFractionDigits: 2,
     });
 
-    // Extracting parts from formatted string
     const parts = currencyFormatter.formatToParts(amount);
 
-    // Adding space between symbol and digits
     const formattedAmount = parts
       .map((part) => (part.type === "currency" ? part.value + " " : part.value))
       .join("");
@@ -175,7 +177,7 @@ const AddToCart = ({ data }) => {
                 <div className="flex justify-center ">
                   <Link
                     href={{
-                      pathname: "/checkout", // Your checkout page path
+                      pathname: "/checkout",
                       query: {
                         userId: localCartItems[0]?.userId || userId,
                         orderSummary: JSON.stringify(localCartItems),
@@ -256,32 +258,17 @@ const AddToCart = ({ data }) => {
                           </p>
                           <div className="flex flex-row gap-2 items-center">
                             <button
-                              className=" bg-black text-white w-[32px] h-[32px] text-center align-middle rounded-full text-xl font-medium"
-                              onClick={() =>
-                                updateQuantity(
-                                  item.productId,
-                                  item.quantity - 1
-                                )
-                              }
+                              className="bg-black text-white w-[32px] h-[32px] text-center align-middle rounded-full text-xl font-medium"
+                              onClick={() => updateQuantity(item.productId, Math.max(1, item.quantity - 1))}
                             >
                               -
                             </button>
                             <div className="w-[60px] h-[40px] border-2 border-black flex items-center justify-center">
-                              {
-                                localCartItems.find(
-                                  (cartItem) =>
-                                    cartItem.productId === item.productId
-                                )?.quantity
-                              }
+                              {item.quantity}
                             </div>
                             <button
-                              className=" bg-black text-white w-[32px] h-[32px] text-center align-middle rounded-full text-xl font-medium"
-                              onClick={() =>
-                                updateQuantity(
-                                  item.productId,
-                                  item.quantity + 1
-                                )
-                              }
+                              className="bg-black text-white w-[32px] h-[32px] text-center align-middle rounded-full text-xl font-medium"
+                              onClick={() => updateQuantity(item.productId, item.quantity + 1)}
                             >
                               +
                             </button>
